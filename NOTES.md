@@ -13,6 +13,7 @@ These are my notes on how I would guess 3D programming is/should be done. For fu
 + Disappearing Horizon
 + Lifeforms
 + Interactivity
++ Gravity
 + Physics
 + Details
 
