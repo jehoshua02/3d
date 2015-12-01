@@ -4,6 +4,22 @@ define(Trigonometry, 'find.hypotenuse.given.adjacent.and.opposite', function (ad
   return Math.sqrt(Math.pow(adjacent, 2) + Math.pow(opposite, 2));
 });
 
+define(Trigonometry, 'find.hypotenuse.given.angle.and.opposite', function (angle, opposite) {
+  return opposite / Math.sin(angle);
+});
+
+define(Trigonometry, 'find.hypotenuse.given.angle.and.adjacent', function (angle, adjacent) {
+  return adjacent / Math.cos(angle);
+});
+
+define(Trigonometry, 'convert.percent.to.radians', function (percent) {
+  return percent * 2 * Math.PI;
+});
+
+define(Trigonometry, 'convert.degrees.to.radians', function (degrees) {
+  return (degrees / 360) * 2 * Math.PI;
+});
+
 function define(target, path, fn) {
   var parts = path.split('.given.');
   var find = parts[0];
@@ -39,5 +55,4 @@ function set(target, path, value) {
   }
 }
 
-console.log(Trigonometry.find.hypotenuse.given);
 module.exports = Trigonometry;
