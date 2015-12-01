@@ -1,6 +1,8 @@
 # 3D Programming Notes
 
-These are my notes on how I would guess 3D programming is/should be done. For fun, I'm thinking through it independently, refraining from doing any research until I feel I've got a good grasp on the subject.
+These are my notes on how I would guess 3D programming is/should be done. For
+fun, I'm thinking through it independently, refraining from doing any research
+until I feel I've got a good grasp on the subject.
 
 ## What's Missing?
 

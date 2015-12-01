@@ -4,7 +4,7 @@
   "description": "A code kata spiraling out of control.",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "export NODE_PATH=./src && mocha --require ./src/test-bootstrap $(find . -type f -name '*.test.js' ! -path './node_modules/*')"
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,10 @@
   "bugs": {
     "url": "https://github.com/jehoshua02/3d/issues"
   },
-  "homepage": "https://github.com/jehoshua02/3d"
+  "homepage": "https://github.com/jehoshua02/3d",
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "chai-as-promised": "^5.1.0",
+    "mocha": "^2.3.4"
+  }
 }
