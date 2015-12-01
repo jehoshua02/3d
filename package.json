@@ -25,5 +25,8 @@
     "chai": "^3.4.1",
     "chai-as-promised": "^5.1.0",
     "mocha": "^2.3.4"
+  },
+  "dependencies": {
+    "foreach-combination": "^1.0.0"
   }
 }

@@ -11,7 +11,7 @@ describe('Trigonometry', function () {
     });
 
     it('should return 2 for [0, 2]', function () {
-      expect(Trig.find.hypotenuse.given.adjacent.and.opposite(2, 0)).to.equal(2);
+      expect(Trig.find.hypotenuse.given.adjacent.and.opposite(0, 2)).to.equal(2);
     });
   });
 });
