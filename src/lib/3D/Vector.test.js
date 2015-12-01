@@ -81,7 +81,11 @@ describe('3D', function () {
 
     describe('distance', function () {
       [
-        {input: [3, 2, 0], expected: Math.sqrt(Math.pow(3, 2) + Math.pow(2, 2))}
+        {input: [3, 2, 0], expected: Math.sqrt(13)},
+        {input: [0, 1, 0], expected: 1},
+        {input: [1, 0, 0], expected: 1},
+        {input: [0, 0, 1], expected: 1},
+        {input: [1, 1, 1], expected: Math.sqrt(1 + Math.pow(Math.sqrt(1 + 1), 2))},
       ].forEach(function (s) {
         it('should return ' + s.expected + ' for [' + s.input + ']', scenario(s));
       });
