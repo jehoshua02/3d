@@ -1,3 +1,4 @@
+var Trig = require('lib/Trigonometry');
 var Vector = require('./Vector');
 
 describe('3D', function () {
@@ -107,6 +108,16 @@ describe('3D', function () {
           expect(actual).to.equal(expected);
         }
       }
+    });
+
+    describe('rotateX', function () {
+      it('should return new Vector, rotated around x axis', function () {
+        var v = new Vector(1, 1, 1);
+        var actual = v.rotateX(Trig.degreesToRadians(2));
+        expect(actual.x).to.equal(1);
+        expect(actual.y).to.equal('?');
+        expect(actual.z).to.equal('?');
+      });
     });
   });
 });

@@ -46,7 +46,7 @@ Vector.prototype.distance = function (that) {
   // Then use this hypotenuse and y to find hypotenuse, which is distance.
   // But first make this problem relative to [0,0,0].
   that = that.subtract(this);
-  var hypotenuse = Trig.find.hypotenuse.given.adjacent.and.opposite;
+  var hypotenuse = Trig.findHypotenuseGivenAdjacentAndOpposite;
   return hypotenuse(hypotenuse(that.x, that.z), that.y);
 }
 
