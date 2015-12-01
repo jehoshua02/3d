@@ -2,11 +2,8 @@ var Trigonometry = {
   find: {
     hypotenuse: {
       given: {
-        adjacent: {
-          and: {
-            opposite: findHypotenuseGivenAdjacentAndOpposite
-          }
-        }
+        adjacent: {and: {opposite: findHypotenuseGivenAdjacentAndOpposite}},
+        opposite: {and: {adjacent: findHypotenuseGivenAdjacentAndOpposite}}
       }
     }
   }
