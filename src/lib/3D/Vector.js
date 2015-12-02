@@ -4,8 +4,12 @@ function Vector(x, y, z) {
   Object.defineProperties(this, {
     x: {get: function () {return x}},
     y: {get: function () {return y}},
-    z: {get: function () {return z}}
+    z: {get: function () {return z}},
   });
+}
+
+Vector.prototype.toArray = function () {
+  return [this.x, this.y, this.z];
 }
 
 Vector.prototype.add = function (that) {
@@ -51,12 +55,23 @@ Vector.prototype.distance = function (that) {
 }
 
 Vector.prototype.rotateZ = function (center, radians) {
-  var diff = this.subtract(center);
-  var hypotenuse = Trig.findHypotenuseGivenAdjacentAndOpposite(diff.x, diff.y);
-  var angle = Trig.findAngleGivenOppositeAndAdjacent(diff.x, diff.y) + radians;
-  var x = Trig.findAdjacentGivenHypotenuseAndAngle(hypotenuse, angle);
-  var y = Trig.findOppositeGivenHypotenuseAndAngle(hypotenuse, angle);
-  var z = this.z;
+  var v = this.subtract(center);
+  var cosa = Math.cos(radians);
+  var sina = Math.sin(radians);
+
+  // s=o/h c=a/h t=o/a
+  // console.log({
+  //   'v.x * cosa': v.x * cosa,
+  //   'v.y * sina': v.y * sina,
+  //   'v.x * cosa - v.y * sina': v.x * cosa - v.y * sina,
+  //   'v.x * sina': v.x * sina,
+  //   'v.y * cosa': v.y * cosa,
+  //   'v.x * sina + v.y * cosa': v.x * sina + v.y * cosa,
+  // });
+
+  var x = v.x * cosa - v.y * sina;
+  var y = v.x * sina + v.y * cosa;
+  var z = v.z;
   return new Vector(x, y, z).add(center);
 }
 

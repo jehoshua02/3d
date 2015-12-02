@@ -13,9 +13,7 @@ describe('3D', function () {
       v.z = 12;
 
       // Assert
-      expect(v.x).to.equal(1);
-      expect(v.y).to.equal(2);
-      expect(v.z).to.equal(3);
+      expect(v.toArray()).to.eql([1, 2, 3]);
     });
 
     describe('add', function () {
@@ -27,12 +25,8 @@ describe('3D', function () {
         var actual = v.add(new Vector(1, 2, 3));
 
         // Assert
-        expect(v.x).to.equal(1);
-        expect(v.y).to.equal(2);
-        expect(v.z).to.equal(3);
-        expect(actual.x).to.equal(2);
-        expect(actual.y).to.equal(4);
-        expect(actual.z).to.equal(6);
+        expect(v.toArray()).to.eql([1, 2, 3]);
+        expect(actual.toArray()).to.eql([2, 4, 6]);
       });
     });
 
@@ -45,12 +39,8 @@ describe('3D', function () {
         var actual = v.subtract(new Vector(1, 2, 3));
 
         // Assert
-        expect(v.x).to.equal(2);
-        expect(v.y).to.equal(4);
-        expect(v.z).to.equal(6);
-        expect(actual.x).to.equal(1);
-        expect(actual.y).to.equal(2);
-        expect(actual.z).to.equal(3);
+        expect(v.toArray()).to.eql([2, 4, 6]);
+        expect(actual.toArray()).to.eql([1, 2, 3]);
       });
     });
 
@@ -58,12 +48,8 @@ describe('3D', function () {
       it('should return new vector, values multiplied', function () {
         var v = new Vector(1, 2, 3);
         var actual = v.multiply(2);
-        expect(v.x).to.equal(1);
-        expect(v.y).to.equal(2);
-        expect(v.z).to.equal(3);
-        expect(actual.x).to.equal(2);
-        expect(actual.y).to.equal(4);
-        expect(actual.z).to.equal(6);
+        expect(v.toArray()).to.eql([1, 2, 3]);
+        expect(actual.toArray()).to.eql([2, 4, 6]);
       });
     });
 
@@ -71,12 +57,8 @@ describe('3D', function () {
       it('should return new vector, values divided', function () {
         var v = new Vector(2, 4, 6);
         var actual = v.divide(2);
-        expect(v.x).to.equal(2);
-        expect(v.y).to.equal(4);
-        expect(v.z).to.equal(6);
-        expect(actual.x).to.equal(1);
-        expect(actual.y).to.equal(2);
-        expect(actual.z).to.equal(3);
+        expect(v.toArray()).to.eql([2, 4, 6]);
+        expect(actual.toArray()).to.eql([1, 2, 3]);
       });
     });
 
@@ -111,19 +93,11 @@ describe('3D', function () {
     });
 
     describe('rotateZ', function () {
-      it('should return new Vector, rotated around z axis', function () {
-        var v = new Vector(1, 1, 1);
-        var actual = v.rotateZ(Trig.degreesToRadians(2));
-        expect(actual.x).to.equal(1);
-        expect(actual.y).to.equal('?');
-        expect(actual.z).to.equal('?');
-      });
-
       [
         {input: {v: [1, 0, 0], degrees: 0}, expected: [1, 0, 0]},
-        {input: {v: [1, 0, 0], degrees: 90}, expected: [0, -1, 0]},
+        {input: {v: [1, 0, 0], degrees: 90}, expected: [0, 1, 0]},
         {input: {v: [1, 0, 0], degrees: 180}, expected: [-1, 0, 0]},
-        {input: {v: [1, 0, 0], degrees: 270}, expected: [0, 1, 0]},
+        {input: {v: [1, 0, 0], degrees: 270}, expected: [0, -1, 0]},
         {input: {v: [1, 0, 0], degrees: 360}, expected: [1, 0, 0]},
       ].forEach(function (data) {
         it([
@@ -149,9 +123,12 @@ describe('3D', function () {
           var actual = v.rotateZ(center, angle);
 
           // Assert
-          expect(actual.x).to.equal(expected[0]);
-          expect(actual.y).to.equal(expected[1]);
-          expect(actual.z).to.equal(expected[2]);
+          var fix = function (num) {
+            num = Math.round(num * 1000) / 1000;
+            if (num == 0) { num = 0 }
+            return num;
+          }
+          expect(actual.toArray().map(fix)).to.eql(expected);
         }
       }
     });
