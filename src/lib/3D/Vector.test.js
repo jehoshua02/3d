@@ -110,14 +110,50 @@ describe('3D', function () {
       }
     });
 
-    describe('rotateX', function () {
-      it('should return new Vector, rotated around x axis', function () {
+    describe('rotateZ', function () {
+      it('should return new Vector, rotated around z axis', function () {
         var v = new Vector(1, 1, 1);
-        var actual = v.rotateX(Trig.degreesToRadians(2));
+        var actual = v.rotateZ(Trig.degreesToRadians(2));
         expect(actual.x).to.equal(1);
         expect(actual.y).to.equal('?');
         expect(actual.z).to.equal('?');
       });
+
+      [
+        {input: {v: [1, 0, 0], degrees: 0}, expected: [1, 0, 0]},
+        {input: {v: [1, 0, 0], degrees: 90}, expected: [0, -1, 0]},
+        {input: {v: [1, 0, 0], degrees: 180}, expected: [-1, 0, 0]},
+        {input: {v: [1, 0, 0], degrees: 270}, expected: [0, 1, 0]},
+        {input: {v: [1, 0, 0], degrees: 360}, expected: [1, 0, 0]},
+      ].forEach(function (data) {
+        it([
+          'should return [' + data.expected + ']',
+          'for [' + data.input.v + ']',
+          'rotated', data.input.degrees, 'degrees'
+        ].join(' '), scenario(data));
+      });
+
+      function scenario(data) {
+        return function () {
+          // Arrange
+          var v = new Vector(
+            data.input.v[0],
+            data.input.v[1],
+            data.input.v[2]
+          );
+          var center = new Vector(0, 0, 0);
+          var angle = Trig.degreesToRadians(data.input.degrees);
+          var expected = data.expected;
+
+          // Act
+          var actual = v.rotateZ(center, angle);
+
+          // Assert
+          expect(actual.x).to.equal(expected[0]);
+          expect(actual.y).to.equal(expected[1]);
+          expect(actual.z).to.equal(expected[2]);
+        }
+      }
     });
   });
 });

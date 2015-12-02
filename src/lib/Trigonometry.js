@@ -4,12 +4,16 @@ Trigonometry.findHypotenuseGivenAdjacentAndOpposite = function (adjacent, opposi
   return Math.sqrt(Math.pow(adjacent, 2) + Math.pow(opposite, 2));
 }
 
-Trigonometry.findHypotenuseGivenAngleAndOpposite = function (angle, opposite) {
-  return opposite / Math.sin(angle);
+Trigonometry.findAngleGivenOppositeAndAdjacent = function (opposite, adjacent) {
+  return Math.atan(opposite/adjacent);
 }
 
-Trigonometry.findHypotenuseGivenAngleAndAdjacent = function (angle, adjacent) {
-  return adjacent / Math.cos(angle);
+Trigonometry.findAdjacentGivenHypotenuseAndAngle = function (hypotenuse, angle) {
+  return hypotenuse * Math.cos(angle);
+}
+
+Trigonometry.findOppositeGivenHypotenuseAndAngle = function (hypotenuse, angle) {
+  return hypotenuse * Math.sin(angle);
 }
 
 Trigonometry.percentToRadians = function (percent) {

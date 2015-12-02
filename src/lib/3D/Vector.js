@@ -50,4 +50,14 @@ Vector.prototype.distance = function (that) {
   return hypotenuse(hypotenuse(that.x, that.z), that.y);
 }
 
+Vector.prototype.rotateZ = function (center, radians) {
+  var diff = this.subtract(center);
+  var hypotenuse = Trig.findHypotenuseGivenAdjacentAndOpposite(diff.x, diff.y);
+  var angle = Trig.findAngleGivenOppositeAndAdjacent(diff.x, diff.y) + radians;
+  var x = Trig.findAdjacentGivenHypotenuseAndAngle(hypotenuse, angle);
+  var y = Trig.findOppositeGivenHypotenuseAndAngle(hypotenuse, angle);
+  var z = this.z;
+  return new Vector(x, y, z).add(center);
+}
+
 module.exports = Vector;
