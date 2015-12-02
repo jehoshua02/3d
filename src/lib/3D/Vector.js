@@ -58,17 +58,6 @@ Vector.prototype.rotateZ = function (center, radians) {
   var v = this.subtract(center);
   var cosa = Math.cos(radians);
   var sina = Math.sin(radians);
-
-  // s=o/h c=a/h t=o/a
-  // console.log({
-  //   'v.x * cosa': v.x * cosa,
-  //   'v.y * sina': v.y * sina,
-  //   'v.x * cosa - v.y * sina': v.x * cosa - v.y * sina,
-  //   'v.x * sina': v.x * sina,
-  //   'v.y * cosa': v.y * cosa,
-  //   'v.x * sina + v.y * cosa': v.x * sina + v.y * cosa,
-  // });
-
   var x = v.x * cosa - v.y * sina;
   var y = v.x * sina + v.y * cosa;
   var z = v.z;
