@@ -3,6 +3,7 @@ var HtmlPlugin = require('html-webpack-plugin');
 var NotifierPlugin = require('webpack-notifier');
 
 module.exports = {
+  devtool: 'source-map',
   entry: {
     index: './examples/index.js'
   },
@@ -18,5 +19,17 @@ module.exports = {
     new NotifierPlugin({
       alwaysNotify: true
     })
-  ]
+  ],
+  module: {
+    loaders: [
+      {
+        test: /\.jsx?$/,
+        exclude: /(node_modules|bower_components)/,
+        loader: 'babel-loader',
+        query: {
+          presets: ['es2015']
+        }
+      }
+    ]
+  }
 };
