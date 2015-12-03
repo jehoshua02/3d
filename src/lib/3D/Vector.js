@@ -53,10 +53,6 @@ Vector.prototype.divide = function (divisor) {
 }
 
 Vector.prototype.distance = function (that) {
-  // Convert this 3D problem into 2-step 2D problem.
-  // Using x and z as adjacent and opposite find hypotenuse.
-  // Then use this hypotenuse and y to find hypotenuse, which is distance.
-  // But first make this problem relative to [0,0,0].
   that = that.subtract(this);
   var hypotenuse = Trig.findHypotenuseGivenAdjacentAndOpposite;
   return hypotenuse(hypotenuse(that.x, that.z), that.y);
@@ -71,7 +67,13 @@ Vector.prototype.axisUnshift = function () {
 }
 
 Vector.prototype.rotateZ = function (radians) {
-  return rotate2D(this, radians);
+  var cosa = Math.cos(radians);
+  var sina = Math.sin(radians);
+  return new Vector(
+    this.x * cosa - this.y * sina,
+    this.x * sina + this.y * cosa,
+    this.z
+  );
 }
 
 Vector.prototype.rotateY = function (radians) {
@@ -83,17 +85,7 @@ Vector.prototype.rotateX = function (radians) {
 }
 
 Vector.prototype.rotate = function (x, y, z) {
-  return this.rotateX(x).rotate(y).rotate(z);
-}
-
-function rotate2D(v, radians) {
-  var cosa = Math.cos(radians);
-  var sina = Math.sin(radians);
-  return new Vector(
-    v.x * cosa - v.y * sina,
-    v.x * sina + v.y * cosa,
-    v.z
-  );
+  return this.rotateX(x).rotateY(y).rotateZ(z);
 }
 
 module.exports = Vector;
