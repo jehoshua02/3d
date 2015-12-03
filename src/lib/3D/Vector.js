@@ -8,6 +8,14 @@ function Vector(x, y, z) {
   });
 }
 
+Vector.prototype.toString = function () {
+  return JSON.stringify({
+    x: this.x,
+    y: this.y,
+    z: this.z
+  });
+}
+
 Vector.prototype.toArray = function () {
   return [this.x, this.y, this.z];
 }
@@ -54,14 +62,38 @@ Vector.prototype.distance = function (that) {
   return hypotenuse(hypotenuse(that.x, that.z), that.y);
 }
 
-Vector.prototype.rotateZ = function (center, radians) {
-  var v = this.subtract(center);
+Vector.prototype.axisShift = function () {
+  return new Vector(this.z, this.x, this.y);
+}
+
+Vector.prototype.axisUnshift = function () {
+  return new Vector(this.y, this.z, this.x);
+}
+
+Vector.prototype.rotateZ = function (radians) {
+  return rotate2D(this, radians);
+}
+
+Vector.prototype.rotateY = function (radians) {
+  return this.axisShift().rotateZ(radians).axisUnshift();
+}
+
+Vector.prototype.rotateX = function (radians) {
+  return this.axisUnshift().rotateZ(radians).axisShift();
+}
+
+Vector.prototype.rotate = function (x, y, z) {
+  return this.rotateX(x).rotate(y).rotate(z);
+}
+
+function rotate2D(v, radians) {
   var cosa = Math.cos(radians);
   var sina = Math.sin(radians);
-  var x = v.x * cosa - v.y * sina;
-  var y = v.x * sina + v.y * cosa;
-  var z = v.z;
-  return new Vector(x, y, z).add(center);
+  return new Vector(
+    v.x * cosa - v.y * sina,
+    v.x * sina + v.y * cosa,
+    v.z
+  );
 }
 
 module.exports = Vector;

@@ -69,12 +69,11 @@ describe('3D', function () {
         {input: [1, 0, 0], expected: 1},
         {input: [0, 0, 1], expected: 1},
         {input: [1, 1, 1], expected: Math.sqrt(1 + Math.pow(Math.sqrt(1 + 1), 2))},
-      ].forEach(function (s) {
-        it('should return ' + s.expected + ' for [' + s.input + ']', scenario(s));
-      });
-
-      function scenario(data) {
-        return function () {
+      ].forEach(function (data) {
+        it([
+          'should return', data.expected,
+          'for [' + data.input + ']'
+        ], function () {
           var x = data.input[0];
           var y = data.input[1];
           var z = data.input[2];
@@ -88,49 +87,65 @@ describe('3D', function () {
 
           // Assert
           expect(actual).to.equal(expected);
-        }
-      }
+        });
+      });
     });
 
-    describe('rotateZ', function () {
-      [
+    [
+      {axis: 'Z', scenarios: [
         {input: {v: [1, 0, 0], degrees: 0}, expected: [1, 0, 0]},
         {input: {v: [1, 0, 0], degrees: 90}, expected: [0, 1, 0]},
         {input: {v: [1, 0, 0], degrees: 180}, expected: [-1, 0, 0]},
         {input: {v: [1, 0, 0], degrees: 270}, expected: [0, -1, 0]},
         {input: {v: [1, 0, 0], degrees: 360}, expected: [1, 0, 0]},
-      ].forEach(function (data) {
-        it([
-          'should return [' + data.expected + ']',
-          'for [' + data.input.v + ']',
-          'rotated', data.input.degrees, 'degrees'
-        ].join(' '), scenario(data));
+      ]},
+      {axis: 'Y', scenarios: [
+        {input: {v: [1, 0, 0], degrees: 0}, expected: [1, 0, 0]},
+        {input: {v: [1, 0, 0], degrees: 90}, expected: [0, 0, -1]},
+        {input: {v: [1, 0, 0], degrees: 180}, expected: [-1, 0, 0]},
+        {input: {v: [1, 0, 0], degrees: 270}, expected: [0, 0, 1]},
+        {input: {v: [1, 0, 0], degrees: 360}, expected: [1, 0, 0]},
+      ]},
+      {axis: 'X', scenarios: [
+        {input: {v: [0, 1, 0], degrees: 0}, expected: [0, 1, 0]},
+        {input: {v: [0, 1, 0], degrees: 90}, expected: [0, 0, 1]},
+        {input: {v: [0, 1, 0], degrees: 180}, expected: [0, -1, 0]},
+        {input: {v: [0, 1, 0], degrees: 270}, expected: [0, 0, -1]},
+        {input: {v: [0, 1, 0], degrees: 360}, expected: [0, 1, 0]},
+      ]},
+    ].forEach(function (group) {
+      describe('rotate' + group.axis, function () {
+        group.scenarios.forEach(function (data) {
+          it([
+            'should rotate [' + data.input.v + ']',
+            'around', data.input.axis, 'axis',
+            'by', data.input.degrees, 'degrees',
+            'and return [' + data.expected + ']',
+          ].join(' '), function () {
+            // Arrange
+            var axis = group.axis;
+            var v = new Vector(
+              data.input.v[0],
+              data.input.v[1],
+              data.input.v[2]
+            );
+            var angle = Trig.degreesToRadians(data.input.degrees);
+            var expected = data.expected;
+
+            // Act
+            var actual = v['rotate' + axis](angle);
+
+            // Assert
+            var fix = function (num) {
+              num = Math.round(num * 1000) / 1000;
+              if (num == 0) { num = 0 }
+              return num;
+            }
+            expect(actual.toArray().map(fix)).to.eql(expected);
+          });
+        });
       });
-
-      function scenario(data) {
-        return function () {
-          // Arrange
-          var v = new Vector(
-            data.input.v[0],
-            data.input.v[1],
-            data.input.v[2]
-          );
-          var center = new Vector(0, 0, 0);
-          var angle = Trig.degreesToRadians(data.input.degrees);
-          var expected = data.expected;
-
-          // Act
-          var actual = v.rotateZ(center, angle);
-
-          // Assert
-          var fix = function (num) {
-            num = Math.round(num * 1000) / 1000;
-            if (num == 0) { num = 0 }
-            return num;
-          }
-          expect(actual.toArray().map(fix)).to.eql(expected);
-        }
-      }
     });
+
   });
 });
