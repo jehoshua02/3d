@@ -1,12 +1,10 @@
 var Trig = require('lib/Trigonometry');
 
 /**
- * Represents a Vector in 3 Dimensions.
+ * Represents a Vector on a "right-handed", 3-dimensional coordinate system.
  *
  * Vectors are immutable. Methods always return a new Vector rather than
  * manipulating current Vector.
- *
- * 3D coordinate system is considered "right-handed".
  *
  * @param {Number} x Distance on the x-axis.
  * @param {Number} y Distance on the y-axis.
