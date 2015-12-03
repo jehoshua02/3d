@@ -4,7 +4,8 @@
   "description": "A code kata spiraling out of control.",
   "main": "src/index.js",
   "scripts": {
-    "test": "export NODE_PATH=./src && mocha --require ./src/test-bootstrap $(find . -type f -name '*.test.js' ! -path './node_modules/*')"
+    "test": "export NODE_PATH=./src && mocha --require ./src/test-bootstrap $(find . -type f -name '*.test.js' ! -path './node_modules/*')",
+    "watch": "webpack-dev-server --content-base ./build --inline"
   },
   "repository": {
     "type": "git",
@@ -24,7 +25,11 @@
   "devDependencies": {
     "chai": "^3.4.1",
     "chai-as-promised": "^5.1.0",
-    "mocha": "^2.3.4"
+    "html-webpack-plugin": "^1.7.0",
+    "mocha": "^2.3.4",
+    "webpack": "^1.12.9",
+    "webpack-dev-server": "^1.14.0",
+    "webpack-notifier": "^1.2.1"
   },
   "dependencies": {}
 }
