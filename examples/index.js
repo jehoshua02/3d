@@ -1,7 +1,5 @@
-class Alert {
-  constructor() { alert('hello world') }
-}
+var Vector = require('lib/Vector');
 
-new Alert;
+var v = new Vector(1, 2, 3);
 
-
+console.log(v.toString());
