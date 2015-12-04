@@ -5,16 +5,16 @@ var NotifierPlugin = require('webpack-notifier');
 module.exports = {
   devtool: 'source-map',
   entry: {
-    index: './examples/index.js'
+    index: path.resolve(__dirname, './src/index.js')
   },
   output: {
-    path: path.resolve(__dirname, './build'),
+    path: './build',
     filename: '[name].js'
   },
   plugins: [
     new HtmlPlugin({
       title: '3D Examples',
-      favicon: './examples/favicon.png'
+      favicon: path.resolve(__dirname, './src/favicon.png')
     }),
     new NotifierPlugin({
       alwaysNotify: true
@@ -27,12 +27,12 @@ module.exports = {
         exclude: /(node_modules|bower_components)/,
         loader: 'babel-loader',
         query: {
-          presets: ['es2015']
+          presets: ['react', 'es2015']
         }
       }
     ]
   },
   resolve: {
-    modulesDirectories: ["node_modules", "./src"]
+    modulesDirectories: ['node_modules', '../src']
   }
 };

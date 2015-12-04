@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "export NODE_PATH=./src && mocha --require ./src/test-bootstrap $(find . -type f -name '*.test.js' ! -path './node_modules/*')",
-    "watch": "webpack-dev-server --content-base ./build --inline"
+    "watch": "webpack-dev-server --config ./examples/webpack.config.js --content-base ./build --inline"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,7 @@
     "babel-core": "^6.2.1",
     "babel-loader": "^6.2.0",
     "babel-preset-es2015": "^6.1.18",
+    "babel-preset-react": "^6.1.18",
     "chai": "^3.4.1",
     "chai-as-promised": "^5.1.0",
     "html-webpack-plugin": "^1.7.0",
@@ -34,5 +35,8 @@
     "webpack-dev-server": "^1.14.0",
     "webpack-notifier": "^1.2.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "react": "^0.14.3",
+    "react-dom": "^0.14.3"
+  }
 }
