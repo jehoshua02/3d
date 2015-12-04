@@ -22,8 +22,6 @@ var VectorExample = React.createClass({
     var style = this._style();
     return (
       <div>
-        <h2>Rotation Example</h2>
-
         <canvas ref="canvas" style={style.canvas}></canvas>
 
         <fieldset>
@@ -146,50 +144,37 @@ var VectorExample = React.createClass({
   },
 
   _draw: function () {
-    this._resize();
-    this._clear();
+    this._canvas().resize();
+    this._canvas().clear();
     this._drawGridLines();
     this._drawAxis();
     this._drawPoint();
   },
 
-  _resize: function () {
-    var canvas = this._canvas();
-    Object.assign(canvas, {
-      width: canvas.offsetWidth,
-      height: canvas.offsetHeight
-    });
-  },
-
-  _clear: function () {
-    var canvas = this._canvas();
-    this._context().clearRect(0, 0, canvas.width, canvas.height);
-  },
-
   _drawGridLines: function () {
     var canvas = this._canvas();
-    var center = this._center();
+    var center = canvas.center;
     var style = this._style();
 
     var spacing = this._spacing() + 1;
 
     for (var x = 0; x <= canvas.width; x += spacing) {
-      this._drawLine(
+      canvas.drawLine(
         new Vector(center.x + x, center.y - spacing, 0),
         new Vector(center.x + x, 0, 0),
         style.grid
       );
-      this._drawLine(
+      canvas.drawLine(
         new Vector(center.x + x, center.y + spacing, 0),
         new Vector(center.x + x, canvas.height, 0),
         style.grid
       );
-      this._drawLine(
+      canvas.drawLine(
         new Vector(center.x - x, center.y - spacing, 0),
         new Vector(center.x - x, 0, 0),
         style.grid
       );
-      this._drawLine(
+      canvas.drawLine(
         new Vector(center.x - x, center.y + spacing, 0),
         new Vector(center.x - x, canvas.height, 0),
         style.grid
@@ -202,21 +187,21 @@ var VectorExample = React.createClass({
     var canvas = this._canvas();
 
     // horizontal
-    this._drawLine(this._centerTop(), this._centerBottom(), style.axis);
-    this._drawLine(this._center(), this._centerTop(), style.ticks);
-    this._drawLine(this._center(), this._centerBottom(), style.ticks);
+    canvas.drawLine(canvas.centerTop, canvas.centerBottom, style.axis);
+    canvas.drawLine(canvas.center, canvas.centerTop, style.ticks);
+    canvas.drawLine(canvas.center, canvas.centerBottom, style.ticks);
 
     // vertical
-    this._drawLine(this._leftCenter(), this._rightCenter(), style.axis);
-    this._drawLine(this._center(), this._leftCenter(), style.ticks);
-    this._drawLine(this._center(), this._rightCenter(), style.ticks);
+    canvas.drawLine(canvas.leftCenter, canvas.rightCenter, style.axis);
+    canvas.drawLine(canvas.center, canvas.leftCenter, style.ticks);
+    canvas.drawLine(canvas.center, canvas.rightCenter, style.ticks);
   },
 
   _drawPoint: function () {
     var style = this._style();
     var center = this._point();
     var radius = 5;
-    this._drawCircle(center, radius, style.circle);
+    this._canvas().drawCircle(center, radius, style.circle);
   },
 
   _point: function () {
@@ -226,74 +211,112 @@ var VectorExample = React.createClass({
       Trig.degreesToRadians(r.x),
       Trig.degreesToRadians(r.y),
       Trig.degreesToRadians(r.z)
-    ).add(this._center());
-  },
-
-  _drawLine: function (a, b, style) {
-    var context = this._context();
-    Object.assign(context, style);
-    if (style.lineDash) {
-      context.setLineDash(style.lineDash);
-    } else {
-      context.setLineDash([0, 0]);
-    }
-    context.beginPath();
-    context.moveTo(a.x, a.y);
-    context.lineTo(b.x, b.y);
-    context.stroke();
-  },
-
-  _drawCircle: function (center, radius, style) {
-    var context = this._context();
-    Object.assign(context, style);
-    context.beginPath();
-    context.moveTo(center.x, center.y);
-    context.beginPath();
-    context.arc(center.x, center.y, radius, 0, 2 * Math.PI);
-    if (style.fillStyle) {
-      context.fill();
-    }
-    if (style.strokeStyle) {
-      context.stroke();
-    }
-  },
-
-  _context: function () {
-    return this._canvas().getContext('2d');
-  },
-
-  _center: function () {
-    return this._rightBottom().divide(2);
-  },
-
-  _centerTop: function () {
-    return new Vector(this._center().x, 0, 0);
-  },
-
-  _centerBottom: function () {
-    return new Vector(this._center().x, this._canvas().height, 0);
-  },
-
-  _leftCenter: function () {
-    return new Vector(0, this._center().y, 0);
-  },
-
-  _rightCenter: function () {
-    return new Vector(this._canvas().width, this._center().y, 0);
-  },
-
-  _rightBottom: function () {
-    var canvas = this._canvas();
-    return new Vector(canvas.width, canvas.height);
+    ).add(this._canvas().center);
   },
 
   _canvas: function () {
-    return this.refs.canvas;
+    return new Canvas(this.refs.canvas);
   },
 
   _spacing: function () {
     return 600 * (20 / 600);
   }
 });
+
+function Canvas(node) {
+  Object.defineProperties(this, {
+    node: {
+      get: function () {
+        return node;
+      }
+    },
+    width: {
+      get: function () {
+        return node.width;
+      }
+    },
+    height: {
+      get: function () {
+        return node.height;
+      }
+    },
+    context: {
+      get: function () {
+        return node.getContext('2d');
+      }
+    },
+    center: {
+      get: function () {
+        return new Vector(this.width / 2, this.height / 2, 0);
+      }
+    },
+    centerTop: {
+      get: function () {
+        return new Vector(this.center.x, 0, 0);
+      }
+    },
+    centerBottom: {
+      get: function () {
+        return new Vector(this.center.x, this.height, 0);
+      }
+    },
+    leftCenter: {
+      get: function () {
+        return new Vector(0, this.center.y, 0);
+      },
+    },
+    rightCenter: {
+      get: function () {
+        return new Vector(this.width, this.center.y, 0);
+      },
+    },
+    rightBottom: {
+      get: function () {
+        return new Vector(this.width, this.height);
+      }
+    },
+  });
+}
+
+Canvas.prototype.clear = function () {
+  this.context.clearRect(0, 0, this.width, this.height);
+}
+
+Canvas.prototype.resize = function () {
+  var node = this.node;
+  Object.assign(node, {
+    width: node.offsetWidth,
+    height: node.offsetHeight
+  });
+}
+
+Canvas.prototype.drawLine = function (a, b, style) {
+  var context = this.context;
+  Object.assign(context, style);
+  if (style.lineDash) {
+    context.setLineDash(style.lineDash);
+  } else {
+    context.setLineDash([0, 0]);
+  }
+  context.beginPath();
+  context.moveTo(a.x, a.y);
+  context.lineTo(b.x, b.y);
+  context.stroke();
+}
+
+Canvas.prototype.drawCircle = function (center, radius, style) {
+  var context = this.context;
+  Object.assign(context, style);
+  context.beginPath();
+  context.moveTo(center.x, center.y);
+  context.beginPath();
+  context.arc(center.x, center.y, radius, 0, 2 * Math.PI);
+  if (style.fillStyle) {
+    context.fill();
+  }
+  if (style.strokeStyle) {
+    context.stroke();
+  }
+}
 
 module.exports = VectorExample;
