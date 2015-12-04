@@ -7,14 +7,14 @@ var VectorExample = React.createClass({
   getInitialState: function () {
     return {
       translate: {
-        x: 0,
+        x: 60,
         y: 0,
         z: 0
       },
       rotate: {
         x: 0,
         y: 0,
-        z: 0
+        z: 30
       }
     };
   },
@@ -28,48 +28,42 @@ var VectorExample = React.createClass({
 
         <fieldset>
           <legend>Translate</legend>
-          <label>X:
-            <input type="text"
-              value={this.state.translate.x}
-              onChange={this._handleTranslate.bind(this, 'x')}
-            />
-          </label>
-          <label>Y:
-            <input type="text"
-              value={this.state.translate.y}
-              onChange={this._handleTranslate.bind(this, 'y')}
-            />
-          </label>
-          <label>Z:
-            <input type="text"
-              value={this.state.translate.z}
-              onChange={this._handleTranslate.bind(this, 'z')}
-            />
-          </label>
+          {['x', 'y', 'z'].map(function (axis, key) {
+            return this._translateInput(axis, key);
+          }.bind(this))}
         </fieldset>
 
         <fieldset>
           <legend>Rotate</legend>
-          <label>X:
-            <input type="text"
-              value={this.state.rotate.x}
-              onChange={this._handleRotate.bind(this, 'x')}
-            />
-          </label>
-          <label>Y:
-            <input type="text"
-              value={this.state.rotate.y}
-              onChange={this._handleRotate.bind(this, 'y')}
-            />
-          </label>
-          <label>Z:
-            <input type="text"
-              value={this.state.rotate.z}
-              onChange={this._handleRotate.bind(this, 'z')}
-            />
-          </label>
+          {['x', 'y', 'z'].map(function (axis, key) {
+            return this._rotateInput(axis, key);
+          }.bind(this))}
         </fieldset>
       </div>
+    );
+  },
+
+  _translateInput: function (axis, key) {
+    return (
+      <label key={key}>{axis.toUpperCase()}:
+        <input type="text"
+          value={this.state.translate[axis]}
+          onChange={this._handleTranslate.bind(this, axis)}
+          onKeyDown={this._handleTranslateKeydown.bind(this, axis)}
+        />
+      </label>
+    );
+  },
+
+  _rotateInput: function (axis, key) {
+    return (
+      <label key={key}>{axis.toUpperCase()}:
+        <input type="text"
+          value={this.state.rotate[axis]}
+          onChange={this._handleRotate.bind(this, axis)}
+          onKeyDown={this._handleRotateKeydown.bind(this, axis)}
+        />
+      </label>
     );
   },
 
@@ -109,7 +103,6 @@ var VectorExample = React.createClass({
 
   _handleTranslate(axis, e) {
     var value = e.target.value;
-    if (value === '') { value = 0; }
     var translate = Object.assign({}, this.state.translate);
     translate[axis] = value;
     this.setState({translate: translate});
@@ -117,10 +110,39 @@ var VectorExample = React.createClass({
 
   _handleRotate: function (axis, e) {
     var value = e.target.value;
-    if (value === '') { value = 0; }
     var rotate = Object.assign({}, this.state.rotate);
-    rotate[axis] = value;
+    rotate[axis] = this._normalizeAngle(value);
     this.setState({rotate: rotate});
+  },
+
+  _handleTranslateKeydown: function (axis, e) {
+    var translate = this.state.translate;
+
+    if (e.key === 'ArrowDown') {
+      translate[axis] -= 10;
+    } else if (e.key === 'ArrowUp') {
+      translate[axis] += 10;
+    }
+
+    this.setState({translate: translate});
+  },
+
+  _handleRotateKeydown: function (axis, e) {
+    var rotate = this.state.rotate;
+
+    if (e.key === 'ArrowDown') {
+      rotate[axis] -= 10;
+    } else if (e.key === 'ArrowUp') {
+      rotate[axis] += 10;
+    }
+
+    rotate[axis] = this._normalizeAngle(rotate[axis])
+
+    this.setState({rotate: rotate});
+  },
+
+  _normalizeAngle: function (angle) {
+    return angle % 360;
   },
 
   _draw: function () {
