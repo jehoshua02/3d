@@ -8,7 +8,7 @@ module.exports = {
     index: path.resolve(__dirname, './src/index.js')
   },
   output: {
-    path: './build',
+    path: path.resolve(__dirname, './build'),
     filename: '[name].js'
   },
   plugins: [
@@ -33,6 +33,6 @@ module.exports = {
     ]
   },
   resolve: {
-    modulesDirectories: ['node_modules', '../src']
+    modulesDirectories: ['node_modules', '../src', '..']
   }
 };
