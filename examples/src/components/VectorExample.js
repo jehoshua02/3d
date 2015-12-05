@@ -3,6 +3,7 @@ var React = require('react');
 var Type = React.PropTypes;
 var Vector = require('src/Vector');
 var Trig = require('src/Trigonometry');
+var NewCanvas = require('src/Canvas');
 
 var VectorExample = React.createClass({
   getInitialState: function () {
@@ -177,7 +178,7 @@ var VectorExample = React.createClass({
   },
 
   _canvas: function () {
-    return new Canvas(this.refs.canvas);
+    return new NewCanvas(this.refs.canvas);
   },
 
   _spacing: function () {
