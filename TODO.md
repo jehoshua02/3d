@@ -1,6 +1,7 @@
-+ Cube Example
-+ Quaternions and Euler angles
 + Redraw examples on Window Resize
++ Quaternions and Euler angles
++ Shapes
++ Cube Example
 + Line
 + More terse Vector instantiation
 + Vector.prototype.reflect
