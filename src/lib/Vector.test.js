@@ -117,7 +117,7 @@ describe('Vector', function () {
       group.scenarios.forEach(function (data) {
         it([
           'should rotate [' + data.input.v + ']',
-          'around', data.input.axis, 'axis',
+          'around', group.axis, 'axis',
           'by', data.input.degrees, 'degrees',
           'and return [' + data.expected + ']',
         ].join(' '), function () {
