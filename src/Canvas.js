@@ -1,5 +1,10 @@
 var Vector = require('./Vector');
 
+/**
+ * Interface for HTML Canvas.
+ *
+ * @param {HTMLCanvasElement} node
+ */
 function Canvas(node) {
   Object.defineProperties(this, {
     // dimensions
@@ -23,6 +28,18 @@ function Canvas(node) {
   });
 }
 
+/**
+ * Resizes canvas.
+ *
+ * If called with two arguments, will resize canvas element to specified width and height.
+ *
+ * If called with no arguments, will resize element to the element offsetWidth and offsetHeight,
+ * which is it's intrinsic width and height in the document, influenced by styles.
+ *
+ * @param  {number} width
+ * @param  {number} height
+ * @return {undefined}
+ */
 Canvas.prototype.resize = function (width, height) {
   if (arguments.length === 2) {
     this._node.width = width;
@@ -33,6 +50,13 @@ Canvas.prototype.resize = function (width, height) {
   }
 }
 
+/**
+ * Clears the canvas.
+ *
+ * Useful for resetting the canvas before redrawing.
+ *
+ * @return {undefined}
+ */
 Canvas.prototype.clear = function () {
   this._context.clearRect(0, 0, this.width, this.height);
 }
