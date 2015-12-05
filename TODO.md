@@ -1,5 +1,4 @@
-+ Fix rotation
-+ Redraw on Window Resize
++ Redraw examples on Window Resize
 + Line
 + More terse Vector instantiation
 + Vector.prototype.reflect
@@ -9,3 +8,5 @@
 + Anything to make working with canvas more clean
 + Publish to Github Pages
 + Another programming Victory
++ Package exports in index.js
++ Files to exclude from npm install
