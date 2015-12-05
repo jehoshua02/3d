@@ -122,22 +122,26 @@ var VectorExample = React.createClass({
     var spacing = this._spacing() + 1;
 
     for (var x = 0; x <= canvas.width; x += spacing) {
-      canvas.drawLine(
+      drawLine(
+        canvas,
         new Vector(center.x + x, center.y - spacing, 0),
         new Vector(center.x + x, 0, 0),
         style.grid
       );
-      canvas.drawLine(
+      drawLine(
+        canvas,
         new Vector(center.x + x, center.y + spacing, 0),
         new Vector(center.x + x, canvas.height, 0),
         style.grid
       );
-      canvas.drawLine(
+      drawLine(
+        canvas,
         new Vector(center.x - x, center.y - spacing, 0),
         new Vector(center.x - x, 0, 0),
         style.grid
       );
-      canvas.drawLine(
+      drawLine(
+        canvas,
         new Vector(center.x - x, center.y + spacing, 0),
         new Vector(center.x - x, canvas.height, 0),
         style.grid
@@ -150,21 +154,21 @@ var VectorExample = React.createClass({
     var canvas = this._canvas();
 
     // horizontal
-    canvas.drawLine(canvas.centerTop, canvas.centerBottom, style.axis);
-    canvas.drawLine(canvas.center, canvas.centerTop, style.ticks);
-    canvas.drawLine(canvas.center, canvas.centerBottom, style.ticks);
+    drawLine(canvas, canvas.centerTop, canvas.centerBottom, style.axis);
+    drawLine(canvas, canvas.center, canvas.centerTop, style.ticks);
+    drawLine(canvas, canvas.center, canvas.centerBottom, style.ticks);
 
     // vertical
-    canvas.drawLine(canvas.leftCenter, canvas.rightCenter, style.axis);
-    canvas.drawLine(canvas.center, canvas.leftCenter, style.ticks);
-    canvas.drawLine(canvas.center, canvas.rightCenter, style.ticks);
+    drawLine(canvas, canvas.leftCenter, canvas.rightCenter, style.axis);
+    drawLine(canvas, canvas.center, canvas.leftCenter, style.ticks);
+    drawLine(canvas, canvas.center, canvas.rightCenter, style.ticks);
   },
 
   _drawPoint: function () {
     var style = this._style();
     var center = this._point();
     var radius = 5;
-    this._canvas().drawCircle(center, radius, style.circle);
+    drawCircle(this._canvas(), center, radius, style.circle);
   },
 
   _point: function () {
@@ -213,75 +217,8 @@ var AxisControl = React.createClass({
   }
 });
 
-function Canvas(node) {
-  Object.defineProperties(this, {
-    node: {
-      get: function () {
-        return node;
-      }
-    },
-    width: {
-      get: function () {
-        return node.width;
-      }
-    },
-    height: {
-      get: function () {
-        return node.height;
-      }
-    },
-    context: {
-      get: function () {
-        return node.getContext('2d');
-      }
-    },
-    center: {
-      get: function () {
-        return new Vector(this.width / 2, this.height / 2, 0);
-      }
-    },
-    centerTop: {
-      get: function () {
-        return new Vector(this.center.x, 0, 0);
-      }
-    },
-    centerBottom: {
-      get: function () {
-        return new Vector(this.center.x, this.height, 0);
-      }
-    },
-    leftCenter: {
-      get: function () {
-        return new Vector(0, this.center.y, 0);
-      },
-    },
-    rightCenter: {
-      get: function () {
-        return new Vector(this.width, this.center.y, 0);
-      },
-    },
-    rightBottom: {
-      get: function () {
-        return new Vector(this.width, this.height);
-      }
-    },
-  });
-}
-
-Canvas.prototype.clear = function () {
-  this.context.clearRect(0, 0, this.width, this.height);
-}
-
-Canvas.prototype.resize = function () {
-  var node = this.node;
-  Object.assign(node, {
-    width: node.offsetWidth,
-    height: node.offsetHeight
-  });
-}
-
-Canvas.prototype.drawLine = function (a, b, style) {
-  var context = this.context;
+function drawLine(canvas, a, b, style) {
+  var context = canvas._context;
   Object.assign(context, style);
   if (style.lineDash) {
     context.setLineDash(style.lineDash);
@@ -294,8 +231,8 @@ Canvas.prototype.drawLine = function (a, b, style) {
   context.stroke();
 }
 
-Canvas.prototype.drawCircle = function (center, radius, style) {
-  var context = this.context;
+function drawCircle(canvas, center, radius, style) {
+  var context = canvas._context;
   Object.assign(context, style);
   context.beginPath();
   context.moveTo(center.x, center.y);
