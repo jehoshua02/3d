@@ -1,8 +1,8 @@
 var ReactDOM = require('react-dom');
 var React = require('react');
 var Type = React.PropTypes;
-var Vector = require('lib/Vector');
-var Trig = require('lib/Trigonometry');
+var Vector = require('src/Vector');
+var Trig = require('src/Trigonometry');
 
 var VectorExample = React.createClass({
   getInitialState: function () {
