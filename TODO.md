@@ -1,4 +1,4 @@
-+ Canvas
++ Quaternions and Euler angles
 + Redraw examples on Window Resize
 + Line
 + More terse Vector instantiation
