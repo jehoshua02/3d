@@ -11,3 +11,4 @@
 + Another programming Victory
 + Package exports in index.js
 + Files to exclude from npm install
++ Public Documentation
