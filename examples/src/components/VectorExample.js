@@ -174,7 +174,7 @@ var VectorExample = React.createClass({
   _point: function () {
     var t = this.state.translate;
     var r = this.state.rotate;
-    return new Vector(t.x, -t.y, t.z).rotate(
+    return new Vector(t.x, t.y, t.z).rotate(
       Trig.degreesToRadians(r.x),
       Trig.degreesToRadians(r.y),
       Trig.degreesToRadians(r.z)
