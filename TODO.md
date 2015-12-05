@@ -1,3 +1,6 @@
++ Look for other refactoring opportunities in examples
++ Move AxisControl component out
++ Canvas.draw(Shapes)
 + Quaternions and Euler angles
 + Shapes
 + Line
