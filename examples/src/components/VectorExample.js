@@ -112,61 +112,17 @@ var VectorExample = React.createClass({
   },
 
   _draw: function () {
+    var canvas = this._canvas();
+    var style = this._style();
+    var spacing = this._spacing();
+
     this._canvas().resize();
     this._canvas().clear();
-    this._drawGridLines();
-    this._drawAxis();
+
+    drawGrid(canvas, spacing, style.grid);
+    drawAxis(canvas, style.axis, style.ticks);
+
     this._drawPoint();
-  },
-
-  _drawGridLines: function () {
-    var canvas = this._canvas();
-    var center = canvas.center;
-    var style = this._style();
-
-    var spacing = this._spacing() + 1;
-
-    for (var x = 0; x <= canvas.width; x += spacing) {
-      drawLine(
-        canvas,
-        new Vector(center.x + x, center.y - spacing, 0),
-        new Vector(center.x + x, 0, 0),
-        style.grid
-      );
-      drawLine(
-        canvas,
-        new Vector(center.x + x, center.y + spacing, 0),
-        new Vector(center.x + x, canvas.height, 0),
-        style.grid
-      );
-      drawLine(
-        canvas,
-        new Vector(center.x - x, center.y - spacing, 0),
-        new Vector(center.x - x, 0, 0),
-        style.grid
-      );
-      drawLine(
-        canvas,
-        new Vector(center.x - x, center.y + spacing, 0),
-        new Vector(center.x - x, canvas.height, 0),
-        style.grid
-      );
-    }
-  },
-
-  _drawAxis: function () {
-    var style = this._style();
-    var canvas = this._canvas();
-
-    // horizontal
-    drawLine(canvas, canvas.centerTop, canvas.centerBottom, style.axis);
-    drawLine(canvas, canvas.center, canvas.centerTop, style.ticks);
-    drawLine(canvas, canvas.center, canvas.centerBottom, style.ticks);
-
-    // vertical
-    drawLine(canvas, canvas.leftCenter, canvas.rightCenter, style.axis);
-    drawLine(canvas, canvas.center, canvas.leftCenter, style.ticks);
-    drawLine(canvas, canvas.center, canvas.rightCenter, style.ticks);
   },
 
   _drawPoint: function () {
@@ -221,6 +177,50 @@ var AxisControl = React.createClass({
     this.props.onChange({type: action, axis, value, e});
   }
 });
+
+function drawGrid(canvas, spacing, style) {
+  var center = canvas.center;
+  spacing = spacing + 1;
+
+  for (var x = 0; x <= canvas.width; x += spacing) {
+    drawLine(
+      canvas,
+      new Vector(center.x + x, center.y - spacing, 0),
+      new Vector(center.x + x, 0, 0),
+      style
+    );
+    drawLine(
+      canvas,
+      new Vector(center.x + x, center.y + spacing, 0),
+      new Vector(center.x + x, canvas.height, 0),
+      style
+    );
+    drawLine(
+      canvas,
+      new Vector(center.x - x, center.y - spacing, 0),
+      new Vector(center.x - x, 0, 0),
+      style
+    );
+    drawLine(
+      canvas,
+      new Vector(center.x - x, center.y + spacing, 0),
+      new Vector(center.x - x, canvas.height, 0),
+      style
+    );
+  }
+}
+
+function drawAxis(canvas, axisStyle, ticksStyle) {
+  // horizontal
+  drawLine(canvas, canvas.centerTop, canvas.centerBottom, axisStyle);
+  drawLine(canvas, canvas.center, canvas.centerTop, ticksStyle);
+  drawLine(canvas, canvas.center, canvas.centerBottom, ticksStyle);
+
+  // vertical
+  drawLine(canvas, canvas.leftCenter, canvas.rightCenter, axisStyle);
+  drawLine(canvas, canvas.center, canvas.leftCenter, ticksStyle);
+  drawLine(canvas, canvas.center, canvas.rightCenter, ticksStyle);
+}
 
 function drawLine(canvas, a, b, style) {
   var context = canvas._context;
