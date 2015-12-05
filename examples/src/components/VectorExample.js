@@ -1,5 +1,6 @@
 var ReactDOM = require('react-dom');
 var React = require('react');
+var Type = React.PropTypes;
 var Vector = require('lib/Vector');
 var Trig = require('lib/Trigonometry');
 
@@ -27,14 +28,26 @@ var VectorExample = React.createClass({
         <fieldset>
           <legend>Translate</legend>
           {['x', 'y', 'z'].map(function (axis, key) {
-            return this._translateInput(axis, key);
+            return <AxisControl
+              action='translate'
+              axis={axis}
+              value={this.state.translate[axis]}
+              onChange={this._handleChange}
+              key={key}
+            />
           }.bind(this))}
         </fieldset>
 
         <fieldset>
           <legend>Rotate</legend>
           {['x', 'y', 'z'].map(function (axis, key) {
-            return this._rotateInput(axis, key);
+            return <AxisControl
+              action='rotate'
+              axis={axis}
+              value={this.state.rotate[axis]}
+              onChange={this._handleChange}
+              key={key}
+            />
           }.bind(this))}
         </fieldset>
       </div>
@@ -47,28 +60,6 @@ var VectorExample = React.createClass({
 
   componentDidUpdate: function () {
     this._draw();
-  },
-
-  _translateInput: function (axis, key) {
-    return (
-      <label key={key}>{axis.toUpperCase()}:
-        <input type="number" step="10"
-          value={this.state.translate[axis]}
-          onChange={this._handleTranslate.bind(this, axis)}
-        />
-      </label>
-    );
-  },
-
-  _rotateInput: function (axis, key) {
-    return (
-      <label key={key}>{axis.toUpperCase()}:
-        <input type="number" step="10"
-          value={this.state.rotate[axis]}
-          onChange={this._handleRotate.bind(this, axis)}
-        />
-      </label>
-    );
   },
 
   _style: function () {
@@ -97,18 +88,17 @@ var VectorExample = React.createClass({
     };
   },
 
-  _handleTranslate(axis, e) {
-    var value = e.target.value;
-    var translate = Object.assign({}, this.state.translate);
-    translate[axis] = value;
-    this.setState({translate: translate});
-  },
-
-  _handleRotate: function (axis, e) {
-    var value = e.target.value;
-    var rotate = Object.assign({}, this.state.rotate);
-    rotate[axis] = this._normalizeAngle(value);
-    this.setState({rotate: rotate});
+  _handleChange: function (action) {
+    var type = action.type;
+    var value = action.value;
+    var axis = action.axis;
+    if (type === 'rotate') {
+      value = this._normalizeAngle(value);
+    }
+    var state = {};
+    state[type] = Object.assign({}, this.state[type]);
+    state[type][axis] = value;
+    this.setState(state);
   },
 
   _normalizeAngle: function (angle) {
@@ -192,6 +182,33 @@ var VectorExample = React.createClass({
 
   _spacing: function () {
     return 600 * (20 / 600);
+  }
+});
+
+var AxisControl = React.createClass({
+  propTypes: {
+    action: Type.string.isRequired,
+    axis: Type.string.isRequired,
+    value: Type.number.isRequired,
+    onChange: Type.func.isRequired,
+  },
+  render: function () {
+    var axis = this.props.axis;
+    var value = this.props.value;
+    return (
+      <label>{axis.toUpperCase()}:
+        <input type="number" step="10"
+          value={value}
+          onChange={this._handleChange}
+        />
+      </label>
+    );
+  },
+  _handleChange: function (e) {
+    var action = this.props.action;
+    var axis = this.props.axis;
+    var value = parseInt(e.target.value);
+    this.props.onChange({type: action, axis, value, e});
   }
 });
 
