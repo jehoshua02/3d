@@ -1,6 +1,8 @@
-+ Look for other refactoring opportunities in examples
++ NewCanvas => Canvas
++ Move supporting example functions to separate modules
++ Canvas Component (receive shapes as prop, redraw on update)
 + Move AxisControl component out
-+ Canvas.draw(Shapes)
++ Canvas.draw(Shapes) to replace drawCircle, drawLine, drawGrid, etc.
 + Quaternions and Euler angles
 + Shapes
 + Line
