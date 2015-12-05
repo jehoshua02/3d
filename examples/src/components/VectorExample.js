@@ -56,7 +56,12 @@ var VectorExample = React.createClass({
   },
 
   componentDidMount: function () {
+    window.addEventListener('resize', this._draw);
     this._draw();
+  },
+
+  componentWillUnmount: function () {
+    window.removeEventListener('resize', this._draw);
   },
 
   componentDidUpdate: function () {
