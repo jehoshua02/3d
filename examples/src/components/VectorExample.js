@@ -41,13 +41,20 @@ var VectorExample = React.createClass({
     );
   },
 
+  componentDidMount: function () {
+    this._draw();
+  },
+
+  componentDidUpdate: function () {
+    this._draw();
+  },
+
   _translateInput: function (axis, key) {
     return (
       <label key={key}>{axis.toUpperCase()}:
-        <input type="text"
+        <input type="number" step="10"
           value={this.state.translate[axis]}
           onChange={this._handleTranslate.bind(this, axis)}
-          onKeyDown={this._handleTranslateKeydown.bind(this, axis)}
         />
       </label>
     );
@@ -56,21 +63,12 @@ var VectorExample = React.createClass({
   _rotateInput: function (axis, key) {
     return (
       <label key={key}>{axis.toUpperCase()}:
-        <input type="text"
+        <input type="number" step="10"
           value={this.state.rotate[axis]}
           onChange={this._handleRotate.bind(this, axis)}
-          onKeyDown={this._handleRotateKeydown.bind(this, axis)}
         />
       </label>
     );
-  },
-
-  componentDidMount: function () {
-    this._draw();
-  },
-
-  componentDidUpdate: function () {
-    this._draw();
   },
 
   _style: function () {
@@ -110,32 +108,6 @@ var VectorExample = React.createClass({
     var value = e.target.value;
     var rotate = Object.assign({}, this.state.rotate);
     rotate[axis] = this._normalizeAngle(value);
-    this.setState({rotate: rotate});
-  },
-
-  _handleTranslateKeydown: function (axis, e) {
-    var translate = this.state.translate;
-
-    if (e.key === 'ArrowDown') {
-      translate[axis] -= 10;
-    } else if (e.key === 'ArrowUp') {
-      translate[axis] += 10;
-    }
-
-    this.setState({translate: translate});
-  },
-
-  _handleRotateKeydown: function (axis, e) {
-    var rotate = this.state.rotate;
-
-    if (e.key === 'ArrowDown') {
-      rotate[axis] -= 10;
-    } else if (e.key === 'ArrowUp') {
-      rotate[axis] += 10;
-    }
-
-    rotate[axis] = this._normalizeAngle(rotate[axis])
-
     this.setState({rotate: rotate});
   },
 
