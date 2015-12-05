@@ -12,21 +12,23 @@ describe('Canvas', function () {
     expect(canvas.height).to.equal(200);
   });
 
-  [
-    {name: 'leftTop', expected: [0, 0, 0]},
-    {name: 'centerTop', expected: [150, 0, 0]},
-    {name: 'rightTop', expected: [300, 0, 0]},
-    {name: 'leftCenter', expected: [0, 100, 0]},
-    {name: 'center', expected: [150, 100, 0]},
-    {name: 'rightCenter', expected: [300, 100, 0]},
-    {name: 'leftBottom', expected: [0, 200, 0]},
-    {name: 'centerBottom', expected: [150, 200, 0]},
-    {name: 'rightBottom', expected: [300, 200, 0]},
-  ].forEach(function (data) {
-    it('should have ' + data.name + ' of [' + data.expected + ']', function () {
-      var canvas = new Canvas(fakeNode());
-      var v = canvas[data.name];
-      expect(v.toArray()).to.eql(data.expected);
+  describe('vertices', function () {
+    [
+      {name: 'leftTop', expected: [0, 0, 0]},
+      {name: 'centerTop', expected: [150, 0, 0]},
+      {name: 'rightTop', expected: [300, 0, 0]},
+      {name: 'leftCenter', expected: [0, 100, 0]},
+      {name: 'center', expected: [150, 100, 0]},
+      {name: 'rightCenter', expected: [300, 100, 0]},
+      {name: 'leftBottom', expected: [0, 200, 0]},
+      {name: 'centerBottom', expected: [150, 200, 0]},
+      {name: 'rightBottom', expected: [300, 200, 0]},
+    ].forEach(function (data) {
+      it('should have ' + data.name + ' of [' + data.expected + ']', function () {
+        var canvas = new Canvas(fakeNode());
+        var v = canvas[data.name];
+        expect(v.toArray()).to.eql(data.expected);
+      });
     });
   });
 
