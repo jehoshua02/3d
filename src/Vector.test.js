@@ -1,4 +1,4 @@
-var Trig = require('lib/Trigonometry');
+var Trig = require('./Trigonometry');
 var Vector = require('./Vector');
 
 describe('Vector', function () {

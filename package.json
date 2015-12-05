@@ -4,7 +4,7 @@
   "description": "A code kata spiraling out of control.",
   "main": "src/index.js",
   "scripts": {
-    "test": "export NODE_PATH=./src && mocha --require ./src/test-bootstrap $(find . -type f -name '*.test.js' ! -path './node_modules/*')",
+    "test": "export NODE_PATH=./src && mocha --require ./test/bootstrap $(find . -type f -name '*.test.js' ! -path './node_modules/*')",
     "watch": "webpack-dev-server --config ./examples/webpack.config.js --content-base ./build --inline"
   },
   "repository": {

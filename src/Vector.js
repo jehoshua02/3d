@@ -1,4 +1,4 @@
-var Trig = require('lib/Trigonometry');
+var Trig = require('./Trigonometry');
 
 /**
  * Represents a Vector on a "right-handed", 3-dimensional coordinate system.
