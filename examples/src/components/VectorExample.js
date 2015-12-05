@@ -116,8 +116,7 @@ var VectorExample = React.createClass({
     var style = this._style();
     var spacing = this._spacing();
 
-    this._canvas().resize();
-    this._canvas().clear();
+    canvas.reset();
 
     drawGrid(canvas, spacing, style.grid);
     drawAxis(canvas, style.axis, style.ticks);

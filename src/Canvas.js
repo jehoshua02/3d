@@ -36,15 +36,15 @@ function Canvas(node) {
  * If called with no arguments, will resize element to the element offsetWidth and offsetHeight,
  * which is it's intrinsic width and height in the document, influenced by styles.
  *
- * @param  {number} width
- * @param  {number} height
+ * @param  {Number} width
+ * @param  {Number} height
  * @return {undefined}
  */
 Canvas.prototype.resize = function (width, height) {
-  if (arguments.length === 2) {
+  if (width && height) {
     this._node.width = width;
     this._node.height = height;
-  } else if (arguments.length == 0) {
+  } else {
     this._node.width = this._node.offsetWidth;
     this._node.height = this._node.offsetHeight;
   }
@@ -59,6 +59,24 @@ Canvas.prototype.resize = function (width, height) {
  */
 Canvas.prototype.clear = function () {
   this._context.clearRect(0, 0, this.width, this.height);
+}
+
+/**
+ * Resets the canvas.
+ *
+ * This method calls `resize` and then `clear`.
+ *
+ * It is important to call `resize` before you call `clear` since the latter
+ * depends on the size of the canvas. This is a convenience method to combine
+ * both into one method.
+ *
+ * @param {Number} width
+ * @param {Number} height
+ * @return {undefined}
+ */
+Canvas.prototype.reset = function (width, height) {
+  this.resize.apply(this, arguments);
+  this.clear();
 }
 
 module.exports = Canvas;

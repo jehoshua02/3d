@@ -63,6 +63,22 @@ describe('Canvas', function () {
     });
   });
 
+  describe('reset', function () {
+    it('should call resize then clear', function () {
+      var spy = {
+        resize: sinon.spy(),
+        clear: sinon.spy()
+      };
+      var canvas = new Canvas(fakeNode());
+      canvas.resize = sinon.spy();
+      canvas.clear = sinon.spy();
+      canvas.reset();
+      expect(canvas.resize.calledOnce).to.be.true;
+      expect(canvas.clear.calledOnce).to.be.true;
+      expect(canvas.resize.calledBefore(canvas.clear)).to.be.true;
+    });
+  });
+
   function fakeNode(props) {
     var context = props && props.context || {};
     return Object.assign({
