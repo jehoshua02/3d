@@ -120,15 +120,7 @@ var VectorExample = React.createClass({
 
     drawGrid(canvas, spacing, style.grid);
     drawAxis(canvas, style.axis, style.ticks);
-
-    this._drawPoint();
-  },
-
-  _drawPoint: function () {
-    var style = this._style();
-    var center = this._point();
-    var radius = 5;
-    drawCircle(this._canvas(), center, radius, style.circle);
+    drawCircle(canvas, this._point(), 5, style.circle);
   },
 
   _point: function () {
