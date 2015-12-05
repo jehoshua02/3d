@@ -1,3 +1,4 @@
++ Canvas
 + Redraw examples on Window Resize
 + Line
 + More terse Vector instantiation
