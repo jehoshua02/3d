@@ -144,7 +144,7 @@ Vector.prototype.axisUnshift = function () {
  * The x and y coordinates change while the z coordinate remains the same.
  *
  * @param  {Number} radians Angle of rotation in radians. Looking down the z
- * axis, at the xy plane, a positive value results in counter-clockwise rotation.
+ * axis, at the xy plane, a positive value results in clockwise rotation.
  * @return {Vector}
  */
 Vector.prototype.rotateZ = function (radians) {
@@ -163,7 +163,7 @@ Vector.prototype.rotateZ = function (radians) {
  * The z and x coordinates change while the y coordinate remains the same.
  *
  * @param  {Number} radians Angle of rotation in radians. Looking down the y
- * axis, at the zx plane, a positive value results in counter-clockwise rotation.
+ * axis, at the zx plane, a positive value results in clockwise rotation.
  * @return {Vector}
  */
 Vector.prototype.rotateY = function (radians) {
@@ -176,7 +176,7 @@ Vector.prototype.rotateY = function (radians) {
  * The y and z coordinates change while the x coordinate remains the same.
  *
  * @param  {Number} radians Angle of rotation in radians. Looking down the x
- * axis, at the yz plane, a positive value results in counter-clockwise rotation.
+ * axis, at the yz plane, a positive value results in clockwise rotation.
  * @return {Vector}
  */
 Vector.prototype.rotateX = function (radians) {
