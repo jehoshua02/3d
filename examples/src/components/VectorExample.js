@@ -4,6 +4,10 @@ var Type = React.PropTypes;
 var Vector = require('src/Vector');
 var Trig = require('src/Trigonometry');
 var Canvas = require('src/Canvas');
+var drawGrid = require('modules/drawGrid');
+var drawAxis = require('modules/drawAxis');
+var drawLine = require('modules/drawLine');
+var drawCircle = require('modules/drawCircle');
 
 var VectorExample = React.createClass({
   getInitialState: function () {
@@ -168,78 +172,5 @@ var AxisControl = React.createClass({
     this.props.onChange({type: action, axis, value, e});
   }
 });
-
-function drawGrid(canvas, spacing, style) {
-  var center = canvas.center;
-  spacing = spacing + 1;
-
-  for (var x = 0; x <= canvas.width; x += spacing) {
-    drawLine(
-      canvas,
-      new Vector(center.x + x, center.y - spacing, 0),
-      new Vector(center.x + x, 0, 0),
-      style
-    );
-    drawLine(
-      canvas,
-      new Vector(center.x + x, center.y + spacing, 0),
-      new Vector(center.x + x, canvas.height, 0),
-      style
-    );
-    drawLine(
-      canvas,
-      new Vector(center.x - x, center.y - spacing, 0),
-      new Vector(center.x - x, 0, 0),
-      style
-    );
-    drawLine(
-      canvas,
-      new Vector(center.x - x, center.y + spacing, 0),
-      new Vector(center.x - x, canvas.height, 0),
-      style
-    );
-  }
-}
-
-function drawAxis(canvas, axisStyle, ticksStyle) {
-  // horizontal
-  drawLine(canvas, canvas.centerTop, canvas.centerBottom, axisStyle);
-  drawLine(canvas, canvas.center, canvas.centerTop, ticksStyle);
-  drawLine(canvas, canvas.center, canvas.centerBottom, ticksStyle);
-
-  // vertical
-  drawLine(canvas, canvas.leftCenter, canvas.rightCenter, axisStyle);
-  drawLine(canvas, canvas.center, canvas.leftCenter, ticksStyle);
-  drawLine(canvas, canvas.center, canvas.rightCenter, ticksStyle);
-}
-
-function drawLine(canvas, a, b, style) {
-  var context = canvas._context;
-  Object.assign(context, style);
-  if (style.lineDash) {
-    context.setLineDash(style.lineDash);
-  } else {
-    context.setLineDash([0, 0]);
-  }
-  context.beginPath();
-  context.moveTo(a.x, a.y);
-  context.lineTo(b.x, b.y);
-  context.stroke();
-}
-
-function drawCircle(canvas, center, radius, style) {
-  var context = canvas._context;
-  Object.assign(context, style);
-  context.beginPath();
-  context.moveTo(center.x, center.y);
-  context.beginPath();
-  context.arc(center.x, center.y, radius, 0, 2 * Math.PI);
-  if (style.fillStyle) {
-    context.fill();
-  }
-  if (style.strokeStyle) {
-    context.stroke();
-  }
-}
 
 module.exports = VectorExample;
