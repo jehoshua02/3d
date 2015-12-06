@@ -28,6 +28,7 @@ var Transform2DExample = React.createClass({
     var style = this._style();
     return (
       <div>
+        <h2>Transform 2D Example</h2>
         <canvas ref="canvas" style={style.canvas}></canvas>
 
         <fieldset>
