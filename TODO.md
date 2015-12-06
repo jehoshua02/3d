@@ -1,5 +1,4 @@
 + Canvas Component (receive shapes as prop, redraw on update)
-+ Move AxisControl component out
 + Canvas.draw(Shapes) to replace drawCircle, drawLine, drawGrid, etc.
 + Quaternions and Euler angles
 + Shapes
@@ -17,3 +16,4 @@
 + Files to exclude from npm install
 + Graduate example modules
 + Public Documentation
++ Motion
