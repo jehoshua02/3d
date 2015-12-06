@@ -9,7 +9,7 @@ var drawAxis = require('modules/drawAxis');
 var drawLine = require('modules/drawLine');
 var drawCircle = require('modules/drawCircle');
 
-var VectorExample = React.createClass({
+var Transform2DExample = React.createClass({
   getInitialState: function () {
     return {
       translate: {
@@ -173,4 +173,4 @@ var AxisControl = React.createClass({
   }
 });
 
-module.exports = VectorExample;
+module.exports = Transform2DExample;
