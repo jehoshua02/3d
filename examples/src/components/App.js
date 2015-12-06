@@ -1,13 +1,13 @@
 var ReactDOM = require('react-dom');
 var React = require('react');
-var VectorExample = require('components/VectorExample');
+var Transform2DExample = require('components/examples/Transform2DExample');
 
 var Examples = React.createClass({
   render: function () {
     return (
       <div>
         <h1>Examples</h1>
-        <VectorExample />
+        <Transform2DExample />
       </div>
     );
   }
