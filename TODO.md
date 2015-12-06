@@ -32,8 +32,9 @@
 + Split examples into separate repo
 + Linting
 + Publish to Github Pages
++ Public Documentation
++ Make Examples pretty
 + Another programming Victory
 + Package exports in index.js
 + Files to exclude from npm install
 + Graduate example modules
-+ Public Documentation
