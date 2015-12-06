@@ -1,13 +1,14 @@
 # TODO
 
-+ More terse Vector instantiation
-+ Canvas.draw(Shapes) to replace drawCircle, drawLine, drawGrid, etc.
-+ Shapes
-+ Canvas Component (receive shapes as prop, redraw on update)
-+ Line
-+ lineDash / styling
 + Cube Example
-+ Textures
++ Shape Class
++ Canvas.draw(Shapes) to replace drawCircle, drawLine, drawGrid, etc.
++ Pyramid Example
++ Canvas Component (receive shapes as prop, redraw on update)
++ lineDash / styling
++ Textures / Skin
++ Cylinder Example
++ Sphere Example
 + Lighting
   + Shadows
   + Shading
