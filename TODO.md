@@ -1,6 +1,5 @@
 # TODO
 
-+ Vector.prototype.reflectX, reflectY, reflectZ
 + Quaternions and Euler angles
 + More terse Vector instantiation
 + Canvas.draw(Shapes) to replace drawCircle, drawLine, drawGrid, etc.
@@ -11,7 +10,10 @@
 + Cube Example
 + Textures
 + Lighting
-+ Motion
+  + Shadows
+  + Shading
+  + Reflections
+  + Gloss
 + Physics
 
 + Publish to Github Pages
