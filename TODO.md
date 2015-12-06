@@ -1,6 +1,5 @@
 # TODO
 
-+ Quaternions and Euler angles
 + More terse Vector instantiation
 + Canvas.draw(Shapes) to replace drawCircle, drawLine, drawGrid, etc.
 + Shapes
@@ -14,7 +13,8 @@
   + Shading
   + Reflections
   + Gloss
-+ Physics
++ Motion/Physics
++ Quaternions and Euler angles
 
 + Publish to Github Pages
 + Another programming Victory
