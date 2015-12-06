@@ -13,14 +13,14 @@ var SingleVector2DTransformExample = React.createClass({
   getInitialState: function () {
     return {
       translate: {
-        x: 60,
+        x: 0,
         y: 0,
         z: 0
       },
       rotate: {
         x: 0,
         y: 0,
-        z: 30,
+        z: 0,
       },
       autoRotate: true,
       speed: 1,
@@ -130,14 +130,28 @@ var SingleVector2DTransformExample = React.createClass({
 
     if (autoRotate) {
       this._autoRotate();
+      this._autoTranslate();
     }
   },
 
   _autoRotate: function () {
+    var value = this.state.rotate.z + this.state.speed;
     this._handleChange({
       type: 'rotate',
-      value: this.state.rotate.z + this.state.speed,
+      value: value,
       axis: 'z',
+    });
+  },
+
+  _autoTranslate: function () {
+    var amplitude = 100;
+    var frequency = 2;
+    var phase = (this.state.rotate.z / 360) * 2 * Math.PI;
+    var value = amplitude * Math.sin(frequency * phase);
+    this._handleChange({
+      type: 'translate',
+      value: value,
+      axis: 'y',
     });
   },
 
