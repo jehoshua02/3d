@@ -2,12 +2,12 @@ var ReactDOM = require('react-dom');
 var React = require('react');
 var Vector = require('src/Vector');
 var Trig = require('src/Trigonometry');
-var Canvas = require('src/Canvas');
 var drawGrid = require('modules/drawGrid');
 var drawAxis = require('modules/drawAxis');
 var drawLine = require('modules/drawLine');
 var drawCircle = require('modules/drawCircle');
 var AxisControl = require('../molecules/AxisControl');
+var Canvas = require('../molecules/Canvas');
 
 var Transform2DExample = React.createClass({
   getInitialState: function () {
@@ -29,7 +29,7 @@ var Transform2DExample = React.createClass({
     return (
       <div>
         <h2>Transform 2D Example</h2>
-        <canvas ref="canvas" style={style.canvas}></canvas>
+        <Canvas style={style.canvas} draw={this._draw} />
 
         <fieldset>
           <legend>Translate</legend>
@@ -58,19 +58,6 @@ var Transform2DExample = React.createClass({
         </fieldset>
       </div>
     );
-  },
-
-  componentDidMount: function () {
-    window.addEventListener('resize', this._draw);
-    this._draw();
-  },
-
-  componentWillUnmount: function () {
-    window.removeEventListener('resize', this._draw);
-  },
-
-  componentDidUpdate: function () {
-    this._draw();
   },
 
   _style: function () {
@@ -116,30 +103,23 @@ var Transform2DExample = React.createClass({
     return angle % 360;
   },
 
-  _draw: function () {
-    var canvas = this._canvas();
+  _draw: function (canvas) {
     var style = this._style();
     var spacing = this._spacing();
 
-    canvas.reset();
-
     drawGrid(canvas, spacing, style.grid);
     drawAxis(canvas, style.axis, style.ticks);
-    drawCircle(canvas, this._point(), 5, style.circle);
+    drawCircle(canvas, this._point(canvas), 5, style.circle);
   },
 
-  _point: function () {
+  _point: function (canvas) {
     var t = this.state.translate;
     var r = this.state.rotate;
     return new Vector(t.x, t.y, t.z).rotate(
       Trig.degreesToRadians(r.x),
       Trig.degreesToRadians(r.y),
       Trig.degreesToRadians(r.z)
-    ).add(this._canvas().center);
-  },
-
-  _canvas: function () {
-    return new Canvas(this.refs.canvas);
+    ).add(canvas.center);
   },
 
   _spacing: function () {
