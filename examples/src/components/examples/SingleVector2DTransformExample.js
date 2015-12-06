@@ -101,7 +101,7 @@ var SingleVector2DTransformExample = React.createClass({
     var value = action.value;
     var axis = action.axis;
     if (type === 'rotate') {
-      value = value % 360;
+      value = value;
     }
     var state = {};
     state[type] = Object.assign({}, this.state[type]);
@@ -145,7 +145,7 @@ var SingleVector2DTransformExample = React.createClass({
 
   _autoTranslate: function () {
     var amplitude = 100;
-    var frequency = 2;
+    var frequency = 1.5;
     var phase = (this.state.rotate.z / 360) * 2 * Math.PI;
     var value = amplitude * Math.sin(frequency * phase);
     this._handleChange({
