@@ -16,4 +16,5 @@
 + Another programming Victory
 + Package exports in index.js
 + Files to exclude from npm install
++ Graduate example modules
 + Public Documentation
