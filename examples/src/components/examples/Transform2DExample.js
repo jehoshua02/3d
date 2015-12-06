@@ -7,7 +7,7 @@ var drawGrid = require('modules/drawGrid');
 var drawAxis = require('modules/drawAxis');
 var drawLine = require('modules/drawLine');
 var drawCircle = require('modules/drawCircle');
-var AxisControl = require('../AxisControl');
+var AxisControl = require('../molecules/AxisControl');
 
 var Transform2DExample = React.createClass({
   getInitialState: function () {
