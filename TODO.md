@@ -16,7 +16,17 @@
   + Gloss
 + Motion/Physics
 + Quaternions and Euler angles
+  + http://answers.unity3d.com/questions/645903/please-explain-quaternions.html
+  + http://www.3dgep.com/understanding-quaternions/
+  + http://docs.unity3d.com/ScriptReference/Quaternion.Euler.html
+  + http://www.euclideanspace.com/maths/algebra/realNormedAlgebra/quaternions/index.htm
++ See if it makes sense to either expand or eliminate the Trig module
 
++ .editorconfig
++ Test React Components
++ Split React Components into separate lib
++ Split examples into separate repo
++ Linting
 + Publish to Github Pages
 + Another programming Victory
 + Package exports in index.js
