@@ -9,7 +9,7 @@ var drawCircle = require('modules/drawCircle');
 var AxisControl = require('../molecules/AxisControl');
 var Canvas = require('../molecules/Canvas');
 
-var Transform2DExample = React.createClass({
+var SingleVector2DTransformExample = React.createClass({
   getInitialState: function () {
     return {
       translate: {
@@ -20,20 +20,22 @@ var Transform2DExample = React.createClass({
       rotate: {
         x: 0,
         y: 0,
-        z: 30
-      }
+        z: 30,
+      },
+      autoRotate: true,
+      speed: 1,
     };
   },
   render: function () {
     var style = this._style();
     return (
       <div>
-        <h2>Transform 2D Example</h2>
+        <h2>SingleVector2DTransformExample</h2>
         <Canvas style={style.canvas} draw={this._draw} />
 
         <fieldset>
           <legend>Translate</legend>
-          {['x', 'y', 'z'].map(function (axis, key) {
+          {['x', 'y'].map(function (axis, key) {
             return <AxisControl
               action='translate'
               axis={axis}
@@ -46,7 +48,7 @@ var Transform2DExample = React.createClass({
 
         <fieldset>
           <legend>Rotate</legend>
-          {['x', 'y', 'z'].map(function (axis, key) {
+          {['z'].map(function (axis, key) {
             return <AxisControl
               action='rotate'
               axis={axis}
@@ -55,6 +57,14 @@ var Transform2DExample = React.createClass({
               key={key}
             />
           }.bind(this))}
+
+          <label>Auto:
+            <input type="checkbox" checked={this.state.autoRotate} onChange={this._toggleAutoRotate} />
+          </label>
+
+          <label>Speed:
+            <input type="number" step="1" value={this.state.speed} onChange={this._changeSpeed} />
+          </label>
         </fieldset>
       </div>
     );
@@ -91,7 +101,7 @@ var Transform2DExample = React.createClass({
     var value = action.value;
     var axis = action.axis;
     if (type === 'rotate') {
-      value = this._normalizeAngle(value);
+      value = value % 360;
     }
     var state = {};
     state[type] = Object.assign({}, this.state[type]);
@@ -99,17 +109,36 @@ var Transform2DExample = React.createClass({
     this.setState(state);
   },
 
-  _normalizeAngle: function (angle) {
-    return angle % 360;
+  _toggleAutoRotate: function () {
+    this.setState({autoRotate: !this.state.autoRotate});
+  },
+
+  _changeSpeed: function (e) {
+    var value = e.target.value;
+    if (e.target.value.trim() === '') { return; }
+    this.setState({speed: parseInt(value)});
   },
 
   _draw: function (canvas) {
     var style = this._style();
     var spacing = this._spacing();
+    var autoRotate = this.state.autoRotate;
 
     drawGrid(canvas, spacing, style.grid);
     drawAxis(canvas, style.axis, style.ticks);
     drawCircle(canvas, this._point(canvas), 5, style.circle);
+
+    if (autoRotate) {
+      this._autoRotate();
+    }
+  },
+
+  _autoRotate: function () {
+    this._handleChange({
+      type: 'rotate',
+      value: this.state.rotate.z + this.state.speed,
+      axis: 'z',
+    });
   },
 
   _point: function (canvas) {
@@ -127,4 +156,4 @@ var Transform2DExample = React.createClass({
   }
 });
 
-module.exports = Transform2DExample;
+module.exports = SingleVector2DTransformExample;

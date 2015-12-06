@@ -2,6 +2,7 @@ var ReactDOM = require('react-dom');
 var React = require('react');
 var _Canvas = require('src/Canvas');
 var ResizeSensor = require('./ResizeSensor');
+var nextFrame = require('../../modules/nextFrame')();
 
 var Canvas = React.createClass({
   propTypes: {
@@ -41,9 +42,11 @@ var Canvas = React.createClass({
   },
 
   _draw: function () {
-    var canvas = new _Canvas(this.refs.canvas);
-    canvas.reset();
-    this.props.draw(canvas);
+    nextFrame(function () {
+      var canvas = new _Canvas(this.refs.canvas);
+      canvas.reset();
+      this.props.draw(canvas);
+    }.bind(this));
   }
 });
 
