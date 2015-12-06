@@ -1,19 +1,22 @@
-+ Canvas Component (receive shapes as prop, redraw on update)
-+ Canvas.draw(Shapes) to replace drawCircle, drawLine, drawGrid, etc.
+# TODO
+
++ Vector.prototype.reflectX, reflectY, reflectZ
 + Quaternions and Euler angles
-+ Shapes
-+ Line
-+ Cube Example
 + More terse Vector instantiation
-+ Vector.prototype.reflect
-+ Vector.prototype.translate
-+ Canvas wrapper
++ Canvas.draw(Shapes) to replace drawCircle, drawLine, drawGrid, etc.
++ Shapes
++ Canvas Component (receive shapes as prop, redraw on update)
++ Line
 + lineDash / styling
-+ Anything to make working with canvas more clean
++ Cube Example
++ Textures
++ Lighting
++ Motion
++ Physics
+
 + Publish to Github Pages
 + Another programming Victory
 + Package exports in index.js
 + Files to exclude from npm install
 + Graduate example modules
 + Public Documentation
-+ Motion
