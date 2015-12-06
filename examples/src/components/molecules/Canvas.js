@@ -1,6 +1,7 @@
 var ReactDOM = require('react-dom');
 var React = require('react');
 var _Canvas = require('src/Canvas');
+var ResizeSensor = require('./ResizeSensor');
 
 var Canvas = React.createClass({
   propTypes: {
@@ -9,22 +10,34 @@ var Canvas = React.createClass({
   },
 
   render: function () {
+    var style = this._style();
+
     return (
-      <canvas ref="canvas" style={this.props.style}></canvas>
+      <div style={style.wrapper}>
+        <canvas ref="canvas" style={style.canvas}></canvas>
+        <ResizeSensor onResize={this._draw} />
+      </div>
     );
   },
 
   componentDidMount: function () {
-    window.addEventListener('resize', this._draw);
     this._draw();
-  },
-
-  componentWillUnmount: function () {
-    window.removeEventListener('resize', this._draw);
   },
 
   componentDidUpdate: function () {
     this._draw();
+  },
+
+  _style: function () {
+    return {
+      wrapper: Object.assign({
+        position: 'relative',
+      }, this.props.style),
+      canvas: {
+        width: '100%',
+        height: '100%',
+      }
+    };
   },
 
   _draw: function () {
