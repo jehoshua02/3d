@@ -1,7 +1,10 @@
 # TODO
 
 + Cube Example
-+ Shape Class
++ Polygon Class
++ Regular Polygons
++ Polyhedron Class
++ Regular Polyhedrons
 + Canvas.draw(Shapes) to replace drawCircle, drawLine, drawGrid, etc.
 + Pyramid Example
 + Canvas Component (receive shapes as prop, redraw on update)
