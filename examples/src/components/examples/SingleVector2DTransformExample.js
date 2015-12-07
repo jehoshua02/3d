@@ -73,8 +73,6 @@ var SingleVector2DTransformExample = React.createClass({
   _style: function () {
     return {
       canvas: {
-        width: '100%',
-        height: '300px',
         background: '#333',
       },
       axis: {

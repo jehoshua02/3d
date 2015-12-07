@@ -11,7 +11,7 @@ var ResizeSensor = React.createClass({
         height: '100%',
         width: '100%',
         border: 'none',
-        backgroundColor: 'red',
+        background: 'transparent',
         position: 'absolute',
         zIndex: -1,
         top: 0,

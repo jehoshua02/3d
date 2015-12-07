@@ -6,15 +6,21 @@ var nextFrame = require('../../modules/nextFrame')();
 
 var Canvas = React.createClass({
   propTypes: {
-    style: React.PropTypes.object.isRequired,
     draw: React.PropTypes.func.isRequired,
+    style: React.PropTypes.object,
+  },
+
+  getDefaultProps: function () {
+    return {
+      style: {}
+    };
   },
 
   render: function () {
     var style = this._style();
 
     return (
-      <div style={style.wrapper}>
+      <div style={style.root}>
         <canvas ref="canvas" style={style.canvas}></canvas>
         <ResizeSensor onResize={this._draw} />
       </div>
@@ -30,11 +36,17 @@ var Canvas = React.createClass({
   },
 
   _style: function () {
+    var ratio = screen.height / screen.width;
     return {
-      wrapper: Object.assign({
+      root: Object.assign({
         position: 'relative',
+        width: '100%',
+        paddingTop: ratio * 100 + '%',
       }, this.props.style),
       canvas: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
         width: '100%',
         height: '100%',
       }
