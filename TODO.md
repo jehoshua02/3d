@@ -27,14 +27,13 @@
 + See if it makes sense to either expand or eliminate the Trig module
 
 + .editorconfig
++ Split React Components into separate lib(s)
 + Test React Components
-+ Split React Components into separate lib
 + Split examples into separate repo
++ Make Examples pretty
++ Public Documentation
 + Linting
 + Publish to Github Pages
-+ Public Documentation
-+ Make Examples pretty
-+ Another programming Victory
 + Package exports in index.js
 + Files to exclude from npm install
 + Graduate example modules
