@@ -40,8 +40,12 @@ var PolygonExample = React.createClass({
   },
 
   _draw: function (canvas) {
-    var style = this._style();
-    drawPolygon(canvas, canvas.center, canvas.height * 0.4, this.state.sides, style.polygon);
+    var style = this._style().polygon;
+    var radius = canvas.height * 0.4;
+    var center = canvas.center;
+    var sides = this.state.sides;
+    var polygon = makeRegularPolygon(sides).multiply(radius).add(center);
+    drawPolygon(canvas, polygon, style);
   },
 
   _changeSides: function (e) {
@@ -49,18 +53,44 @@ var PolygonExample = React.createClass({
   }
 });
 
-function drawPolygon(canvas, center, radius, sides, style) {
+function makeRegularPolygon(sides, radius) {
+  var vectors = [];
+  var a = 360 / sides;
+  for (var i = 0; i < sides; i++) {
+    var angle = Trig.degreesToRadians(a * i);
+    vectors.push(new Vector(0, -1, 0).rotateZ(angle));
+  }
+  return new VectorList(vectors);
+}
+
+function VectorList(vectors) {
+  this.vectors = vectors;
+}
+
+VectorList.prototype.map = function (fn) {
+  return new VectorList(this.vectors.map(fn));
+}
+
+VectorList.prototype.forEach = function (fn) {
+  this.vectors.forEach(fn);
+}
+
+VectorList.prototype.multiply = function (factor) {
+  return this.map(function (v) {return v.multiply(factor)});
+}
+
+VectorList.prototype.add = function (vector) {
+  return this.map(function (v) {return v.add(vector)});
+}
+
+function drawPolygon(canvas, polygon, style) {
   var context = canvas._context;
   Object.assign(context, style);
   context.beginPath();
-  for (var i = 0; i < sides; i++) {
-    var a = 360 / sides;
-    var v = new Vector(0, -radius, 0)
-      .rotateZ(Trig.degreesToRadians(a * i))
-      .add(center);
+  polygon.forEach(function (v, i) {
     var method = (i === 0) ? 'moveTo' : 'lineTo';
     context[method](v.x, v.y);
-  }
+  });
   context.closePath();
   context.fill();
 }
