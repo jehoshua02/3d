@@ -1,6 +1,7 @@
 # TODO
 
 + Polygon Example
++ Polygon Class
   + Polygon is a group of connected vectors.
   + All vectors lie on the same 2D plane.
   + Lines between two connected vectors are known as edges.
@@ -16,7 +17,9 @@
   + After transformation, all vectors still remain on the same 2D plane even
     if that plane doesn't align with one of the normal x, y, z axis.
   + Polygons expose their vectors and fill style for drawing functions.
-+ Polygon Class
+  + Maybe to keep a consistent, generic interface for drawing functions, exposes
+    list of faces, contining only the Polygon itself, so drawing functions can
+    always ask for faces first, then ask each face for vectors and fill style.
 + Regular Polygons
 + Polyhedron Class
   + Polyhedron is a group of polygons arranged to form a 3D shape.
@@ -27,7 +30,23 @@
     faces to other faces within Polyhedron should remain intact.
   + Polyhedrons expose their faces, which are simply Polygons, for drawing
     functions.
++ Polyhedron Example
 + Regular Polyhedrons
++ Group Class(es)
+  + PolyhedronGroup Class
+    + A group of Polyhedrons (duh).
+    + May be transformed. Polyhedron relationships remain intact.
+    + Reduces list of Polyhedrons to a list of faces, which it exposes for
+      drawing functions.
+  + PolygonGroup Class
+    + A group of Polygons.
+    + May be transformed. Relations intact.
+    + Reduces list of Polygons to a list of faces, exosed for drawing.
+  + May be able to collapse these Group classes into one, especially if the
+    Polygon interface mimics the Polyhedron interface. This will make it easier
+    for the rest of the library since it doesn't have to treat these Groups
+    differently. Nor do we have to maintain two classes that are 90% the same.
+    We want to avoid inheritance for the sake of simplicity.
 + Transparency
 + Cube Example
 + Canvas.draw(Shapes) to replace drawCircle, drawLine, drawGrid, etc.
