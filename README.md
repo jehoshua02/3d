@@ -26,4 +26,4 @@ npm run test
 
 ## What's Next?
 
-See [TODO.md](blob/master/TODO.md).
+See [TODO.md](TODO.md).
