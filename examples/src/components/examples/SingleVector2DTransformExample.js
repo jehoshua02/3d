@@ -101,7 +101,7 @@ var SingleVector2DTransformExample = React.createClass({
       value = value;
     }
     var state = {};
-    state[type] = Object.assign({}, this.state[type]);
+    state[type] = this.state[type];
     state[type][axis] = value;
     this.setState(state);
   },

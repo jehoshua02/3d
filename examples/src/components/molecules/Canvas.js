@@ -22,17 +22,17 @@ var Canvas = React.createClass({
     return (
       <div style={style.root}>
         <canvas ref="canvas" style={style.canvas}></canvas>
-        <ResizeSensor onResize={this._draw} />
+        <ResizeSensor onResize={this._queueDraw} />
       </div>
     );
   },
 
   componentDidMount: function () {
-    this._draw();
+    this._queueDraw();
   },
 
   componentDidUpdate: function () {
-    this._draw();
+    this._queueDraw();
   },
 
   _style: function () {
@@ -53,12 +53,16 @@ var Canvas = React.createClass({
     };
   },
 
+  _queueDraw: function () {
+    if (this._queued) {return}
+    this._queued = window.requestAnimationFrame(this._draw);
+  },
+
   _draw: function () {
-    nextFrame(function () {
-      var canvas = new _Canvas(this.refs.canvas);
-      canvas.reset();
-      this.props.draw(canvas);
-    }.bind(this));
+    this._queued = null;
+    var canvas = new _Canvas(this.refs.canvas);
+    canvas.reset();
+    this.props.draw(canvas);
   }
 });
 
