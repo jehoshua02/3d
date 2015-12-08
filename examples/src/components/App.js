@@ -8,8 +8,8 @@ var Examples = React.createClass({
     return (
       <div>
         <h1>Examples</h1>
-        <PolygonExample />
         <SingleVector2DTransformExample />
+        <PolygonExample />
       </div>
     );
   }

@@ -7,6 +7,7 @@ var drawLine = require('modules/drawLine');
 var drawCircle = require('modules/drawCircle');
 var AxisControl = require('../molecules/AxisControl');
 var Canvas = require('../molecules/Canvas');
+var Heading = require('../molecules/Heading');
 
 var SingleVector2DTransformExample = React.createClass({
   getInitialState: function () {
@@ -29,7 +30,8 @@ var SingleVector2DTransformExample = React.createClass({
     var style = this._style();
     return (
       <div>
-        <h2>SingleVector2DTransformExample</h2>
+        <Heading text="SingleVector2DTransformExample" />
+
         <Canvas style={style.canvas} draw={this._draw} />
 
         <fieldset>

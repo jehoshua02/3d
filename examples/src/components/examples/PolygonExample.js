@@ -3,7 +3,8 @@ var Canvas = require('../molecules/Canvas');
 var Vector = require('src/Vector');
 var Trig = require('src/Trigonometry');
 var polygonName = require('../../modules/polygonName');
-var capitalize = require('../../modules/capitalize');
+var Heading = require('../molecules/Heading');
+var capitalize = require('capitalize');
 
 var PolygonExample = React.createClass({
   getInitialState: function () {
@@ -18,11 +19,14 @@ var PolygonExample = React.createClass({
     var name = polygonName(sides).map(capitalize).join(' / ');
     return (
       <div>
-        <h2>Polygon Example</h2>
+        <Heading text="PolygonExample" />
+
         <label>Sides:
           <input type="number" step="1" min="3" value={sides} onChange={this._changeSides} />
         </label>
+
         <h4>{name}</h4>
+
         <Canvas style={style.canvas} draw={this._draw} />
       </div>
     );
