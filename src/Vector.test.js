@@ -15,6 +15,22 @@ describe('Vector', function () {
     expect(v.toArray()).to.eql([1, 2, 3]);
   });
 
+  describe('toObject', function () {
+    it('should return object literal', function () {
+      var v = new Vector(1, 2, 3);
+      var actual = v.toObject();
+      expect(actual).to.eql({x: 1, y: 2, z: 3});
+    });
+  });
+
+  describe('toJSON', function () {
+    it('should return json string', function () {
+      var v = new Vector(1, 2, 3);
+      var actual = v.toJSON();
+      expect(actual).to.equal('{"x":1,"y":2,"z":3}');
+    });
+  });
+
   describe('add', function () {
     it('should return new vector, values added', function () {
       // Arrange

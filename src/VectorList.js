@@ -4,20 +4,28 @@ function VectorList(vectors) {
   });
 }
 
-// VectorList.prototype.map = function (fn) {
-//   return new VectorList(this.vectors.map(fn));
-// }
+VectorList.prototype.toArray = function () {
+  return this.vectors.map(function (v) {return v.toArray()});
+}
 
-// VectorList.prototype.forEach = function (fn) {
-//   this.vectors.forEach(fn);
-// }
+VectorList.prototype.toObject = function () {
+  return this.vectors.map(function (v) {return v.toObject()});
+}
 
-// VectorList.prototype.multiply = function (factor) {
-//   return this.map(function (v) {return v.multiply(factor)});
-// }
+VectorList.prototype.toJSON = function () {
+  return JSON.stringify(
+    this.vectors.map(function (v) {return v.toObject()})
+  );
+}
 
-// VectorList.prototype.add = function (vector) {
-//   return this.map(function (v) {return v.add(vector)});
-// }
+VectorList.prototype.multiply = function (factor) {
+  var vectors = this.vectors.map(function (v) {return v.multiply(factor)});
+  return new VectorList(vectors);
+}
+
+VectorList.prototype.add = function (vector) {
+  var vectors = this.vectors.map(function (v) {return v.add(vector)});
+  return new VectorList(vectors);
+}
 
 module.exports = VectorList;

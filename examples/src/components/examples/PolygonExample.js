@@ -55,7 +55,7 @@ var PolygonExample = React.createClass({
     var center = canvas.center;
     var sides = this.state.sides;
     var polygon = makeRegularPolygon(sides).multiply(radius).add(center);
-    drawPolygon(canvas, polygon, style);
+    drawPolygon(canvas, polygon.vectors, style);
 
     if (this.state.auto) {
       window.requestAnimationFrame(this._autoChangeSides);
