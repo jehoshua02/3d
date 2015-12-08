@@ -4,8 +4,8 @@ function polygonName(sides) {
     return [];
   } else if (sides <= 20) {
     return {
-      3: ['trigon', 'triangle'],
-      4: ['tetragon'],
+      3: ['triangle', 'trigon'],
+      4: ['square', 'tetragon'],
       5: ['pentagon'],
       6: ['hexagon', 'sexagon'],
       7: ['heptagon'],

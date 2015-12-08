@@ -1,15 +1,17 @@
 var React = require('react');
 var Canvas = require('../molecules/Canvas');
-var Vector = require('src/Vector');
 var Trig = require('src/Trigonometry');
-var polygonName = require('../../modules/polygonName');
 var Heading = require('../molecules/Heading');
 var capitalize = require('capitalize');
+var polygonName = require('../../modules/polygonName');
+var drawPolygon = require('../../modules/drawPolygon');
+var makeRegularPolygon = require('../../modules/makeRegularPolygon');
 
 var PolygonExample = React.createClass({
   getInitialState: function () {
     return {
-      sides: 3
+      sides: 3,
+      auto: true,
     };
   },
 
@@ -20,6 +22,10 @@ var PolygonExample = React.createClass({
     return (
       <div>
         <Heading text="PolygonExample" />
+
+        <label>Auto:
+          <input type="checkbox" checked={this.state.auto} onChange={this._toggleAuto} />
+        </label>
 
         <label>Sides:
           <input type="number" step="1" min="3" value={sides} onChange={this._changeSides} />
@@ -50,53 +56,29 @@ var PolygonExample = React.createClass({
     var sides = this.state.sides;
     var polygon = makeRegularPolygon(sides).multiply(radius).add(center);
     drawPolygon(canvas, polygon, style);
+
+    if (this.state.auto) {
+      window.requestAnimationFrame(this._autoChangeSides);
+    }
+  },
+
+  _toggleAuto: function () {
+    this.setState({auto: !this.state.auto});
+  },
+
+  _autoChangeSides: function () {
+    var now = new Date();
+    var t = now.getSeconds() + now.getMilliseconds() / 1000;
+    var a = 18;
+    var w = Trig.degreesToRadians(360 / 10);
+    var p = w * t;
+    var sides = Math.max(3, Math.floor(a * Math.sin(w * t + p)) + 3);
+    this.setState({sides: sides});
   },
 
   _changeSides: function (e) {
     this.setState({sides: parseInt(e.target.value)});
   }
 });
-
-function makeRegularPolygon(sides, radius) {
-  var vectors = [];
-  var a = 360 / sides;
-  for (var i = 0; i < sides; i++) {
-    var angle = Trig.degreesToRadians(a * i);
-    vectors.push(new Vector(0, -1, 0).rotateZ(angle));
-  }
-  return new VectorList(vectors);
-}
-
-function VectorList(vectors) {
-  this.vectors = vectors;
-}
-
-VectorList.prototype.map = function (fn) {
-  return new VectorList(this.vectors.map(fn));
-}
-
-VectorList.prototype.forEach = function (fn) {
-  this.vectors.forEach(fn);
-}
-
-VectorList.prototype.multiply = function (factor) {
-  return this.map(function (v) {return v.multiply(factor)});
-}
-
-VectorList.prototype.add = function (vector) {
-  return this.map(function (v) {return v.add(vector)});
-}
-
-function drawPolygon(canvas, polygon, style) {
-  var context = canvas._context;
-  Object.assign(context, style);
-  context.beginPath();
-  polygon.forEach(function (v, i) {
-    var method = (i === 0) ? 'moveTo' : 'lineTo';
-    context[method](v.x, v.y);
-  });
-  context.closePath();
-  context.fill();
-}
 
 module.exports = PolygonExample;

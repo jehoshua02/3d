@@ -22,7 +22,7 @@ var SingleVector2DTransformExample = React.createClass({
         y: 0,
         z: 0,
       },
-      autoRotate: true,
+      auto: true,
       speed: 1,
     };
   },
@@ -60,7 +60,7 @@ var SingleVector2DTransformExample = React.createClass({
           }.bind(this))}
 
           <label>Auto:
-            <input type="checkbox" checked={this.state.autoRotate} onChange={this._toggleAutoRotate} />
+            <input type="checkbox" checked={this.state.auto} onChange={this._toggleAutoRotate} />
           </label>
 
           <label>Speed:
@@ -109,7 +109,7 @@ var SingleVector2DTransformExample = React.createClass({
   },
 
   _toggleAutoRotate: function () {
-    this.setState({autoRotate: !this.state.autoRotate});
+    this.setState({auto: !this.state.auto});
   },
 
   _changeSpeed: function (e) {
@@ -121,13 +121,13 @@ var SingleVector2DTransformExample = React.createClass({
   _draw: function (canvas) {
     var style = this._style();
     var spacing = this._spacing();
-    var autoRotate = this.state.autoRotate;
+    var auto = this.state.auto;
 
     drawGrid(canvas, spacing, style.grid);
     drawAxis(canvas, style.axis, style.ticks);
     drawCircle(canvas, this._point(canvas), 5, style.circle);
 
-    if (autoRotate) {
+    if (auto) {
       this._autoRotate();
       this._autoTranslate();
     }
