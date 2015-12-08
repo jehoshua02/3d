@@ -63,4 +63,11 @@ VectorList.prototype.add = function (vector) {
   return new VectorList(vectors);
 }
 
+VectorList.prototype.rotate = function (x, y, z) {
+  var vectors = this.vectors.map(function (v) {
+    return v.rotate(x, y, z);
+  });
+  return new VectorList(vectors);
+}
+
 module.exports = VectorList;
