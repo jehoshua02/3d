@@ -1,13 +1,20 @@
 # TODO
 
-+ VectorList.rotate tests
-+ RotateControl Component
++ https://www.udacity.com/course/viewer#!/c-cs291/l-91376562/m-101541795
 + Research Perspective
+  + https://en.wikipedia.org/wiki/Z-buffering
+  + https://en.wikipedia.org/wiki/3D_rendering#Projection
+  + https://en.wikipedia.org/wiki/3D_projection
   + https://www.youtube.com/watch?v=3ZmqJb7J5wE&list=PLW3Zl3wyJwWOpdhYedlD-yCB7WQoHf-My&index=38
   + https://www.youtube.com/watch?v=jeO_ytN_0kk
   + https://www.youtube.com/watch?v=dul0mui292Q
-+ Polygon 2D Transformation
-+ Polygon 3D Transformation / Projecting 3D Object to 2D Plane
+  + https://en.wikipedia.org/wiki/Viewing_frustum
++ VectorList.rotate tests
++ RotateControl Component
++ Cube Example
++ Teapot Example
++ Camera Example - Look around scene with cube on it.
+  + https://en.wikipedia.org/wiki/Bounding_volume
 + Polygon Class
   + Polygon is a group of connected vectors.
   + All vectors lie on the same 2D plane.
@@ -68,6 +75,10 @@
   + Shading
   + Reflections
   + Gloss
+  + https://en.wikipedia.org/wiki/Ray_tracing_(graphics)
+  + https://en.wikipedia.org/wiki/Radiosity_(computer_graphics)
++ Mist, Fog, Distance Fade - This can be done by placing semi-transparent layers
+  a distance away on the normal vector of the camera.
 + Motion/Physics
 + Quaternions and Euler angles
   + https://www.youtube.com/watch?v=Ne3RNhEVSIE&index=34&list=PLW3Zl3wyJwWOpdhYedlD-yCB7WQoHf-My
@@ -88,3 +99,4 @@
 + Package exports in index.js
 + Files to exclude from npm install
 + Graduate example modules
++ Research three.js
