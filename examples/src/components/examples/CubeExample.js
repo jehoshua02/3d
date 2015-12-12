@@ -9,14 +9,9 @@ var drawPolygon = require('../../modules/drawPolygon');
 var randomColor = require('random-color');
 var sineWave = require('../../modules/sineWave');
 
-var colors = [
-  'red',
-  'yellow',
-  'blue',
-  'orange',
-  'green',
-  'purple',
-];
+var colors = new Array(6).fill(true, 0, 6).map(function () {return randomColor()});
+
+console.log(colors);
 
 var CubeExample = React.createClass({
   getInitialState: function () {
