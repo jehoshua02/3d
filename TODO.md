@@ -1,6 +1,7 @@
 # TODO
 
 + Cube Example
+  + Figure out how to project/scale/whatever when translating on z axis
 + https://www.udacity.com/course/viewer#!/c-cs291/l-91376562/m-101541795
 + Research Perspective
   + https://en.wikipedia.org/wiki/Z-buffering

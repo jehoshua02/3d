@@ -6,16 +6,24 @@ var Vector = require('src/Vector');
 var VectorList = require('src/VectorList');
 var Trig = require('src/Trigonometry');
 var drawPolygon = require('../../modules/drawPolygon');
-var randomColor = require('random-color');
+var Color = require('color');
 var sineWave = require('../../modules/sineWave');
 
-var colors = new Array(6).fill(true, 0, 6).map(function () {return randomColor()});
+var theme = Color('hotpink');
+var colors = [
+  theme,
+  theme.clone().darken(0.1),
+  theme,
+  theme.clone().darken(0.1),
+  theme.clone().darken(0.2),
+  theme.clone().darken(0.2),
+].map(function (color) {return color.rgbString()});
 
 var CubeExample = React.createClass({
   getInitialState: function () {
     return {
       auto: true,
-      speed: 1,
+      speed: 10,
       rotate: {
         x: 0,
         y: 0,
