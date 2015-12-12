@@ -6,7 +6,8 @@ var capitalize = require('capitalize');
 var polygonName = require('../../modules/polygonName');
 var drawPolygon = require('../../modules/drawPolygon');
 var makeRegularPolygon = require('../../modules/makeRegularPolygon');
-var AxisControl = require('../molecules/AxisControl');
+var AxisControls = require('../molecules/AxisControls');
+var sineWave = require('../../modules/sineWave');
 
 var PolygonExample = React.createClass({
   getInitialState: function () {
@@ -38,19 +39,12 @@ var PolygonExample = React.createClass({
           <input type="number" step="1" min="3" value={sides} onChange={this._changeSides} />
         </label>
 
-        <fieldset>
-          <legend>Rotate</legend>
-          {['x', 'y', 'z'].map(function (axis, key) {
-            return <AxisControl
-              action='rotate'
-              axis={axis}
-              step={5}
-              value={this.state.rotate[axis]}
-              onChange={this._handleRotation}
-              key={key}
-            />
-          }.bind(this))}
-        </fieldset>
+        <AxisControls
+          label="Rotate" action="rotate"
+          value={this.state.rotate}
+          step={5}
+          onChange={this._handleRotation}
+        />
 
         <h4>{name}</h4>
 
@@ -117,13 +111,5 @@ var PolygonExample = React.createClass({
     this.setState({rotate: rotate});
   }
 });
-
-function sineWave(amplitude, rate) {
-  var now = new Date();
-  var time = now.getSeconds() + now.getMilliseconds() / 1000;
-  var frequency = Trig.degreesToRadians(rate);
-  var phase = frequency * time;
-  return Math.floor(amplitude * Math.sin(frequency * time + phase));
-}
 
 module.exports = PolygonExample;

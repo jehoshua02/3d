@@ -1,5 +1,6 @@
 # TODO
 
++ Cube Example
 + https://www.udacity.com/course/viewer#!/c-cs291/l-91376562/m-101541795
 + Research Perspective
   + https://en.wikipedia.org/wiki/Z-buffering
@@ -11,7 +12,6 @@
   + https://en.wikipedia.org/wiki/Viewing_frustum
 + VectorList.rotate tests
 + RotateControl Component
-+ Cube Example
 + Teapot Example
 + Camera Example - Look around scene with cube on it.
   + https://en.wikipedia.org/wiki/Bounding_volume
