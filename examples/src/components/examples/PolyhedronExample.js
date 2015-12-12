@@ -8,22 +8,23 @@ var Trig = require('src/Trigonometry');
 var drawPolygon = require('../../modules/drawPolygon');
 var Color = require('color');
 var sineWave = require('../../modules/sineWave');
+var makeRegularPolygon = require('../../modules/makeRegularPolygon');
 
 var theme = Color('hotpink');
 var colors = [
   theme,
   theme.clone().darken(0.1),
-  theme,
-  theme.clone().darken(0.1),
   theme.clone().darken(0.2),
-  theme.clone().darken(0.2),
+  theme.clone().darken(0.3),
+  theme.clone().darken(0.4),
+  theme.clone().darken(0.5),
 ].map(function (color) {return color.rgbString()});
 
-var CubeExample = React.createClass({
+var PolyhedronExample = React.createClass({
   getInitialState: function () {
     return {
       auto: true,
-      speed: 10,
+      speed: 5,
       rotate: {
         x: 0,
         y: 0,
@@ -41,7 +42,7 @@ var CubeExample = React.createClass({
     var style = this._style();
     return (
       <div>
-        <Heading text="CubeExample" />
+        <Heading text="PolyhedronExample" />
 
         <label>Auto:
           <input type="checkbox" checked={this.state.auto} onChange={this._toggleAuto} />
@@ -120,13 +121,21 @@ var CubeExample = React.createClass({
     var rotate = this.state.rotate;
     var translate = this.state.translate;
 
-    var cube = makeCube()
-      .rotate(
-        radians(rotate.x), radians(rotate.y), radians(rotate.z)
-      )
+    var tetrahedron = makeTetrahedron()
+      .rotate(radians(rotate.x), radians(rotate.y), radians(rotate.z))
       .add(translate)
-      .multiply((canvas.height / 2) * 0.4)
-      .add(canvas.center);
+      .multiply((canvas.height / 2) * 0.5)
+      .add(canvas.center)
+      .subtract(new Vector(canvas.width * 0.25, 0, 0));
+
+    drawPolyhedron(canvas, tetrahedron.faces, style.cube);
+
+    var cube = makeCube()
+      .rotate(radians(rotate.x), radians(rotate.y), radians(rotate.z))
+      .add(translate)
+      .multiply((canvas.height / 2) * 0.3)
+      .add(canvas.center)
+      .add(new Vector(canvas.width * 0.25, 0, 0));
 
     drawPolyhedron(canvas, cube.faces, style.cube);
 
@@ -148,7 +157,7 @@ var CubeExample = React.createClass({
 });
 
 function makeCube() {
-  var vectors = new VectorList([
+  var vectors = [
     new Vector(-1, -1, -1),
     new Vector(1, -1, -1),
     new Vector(1, 1, -1),
@@ -157,7 +166,7 @@ function makeCube() {
     new Vector(1, -1, 1),
     new Vector(1, 1, 1),
     new Vector(-1, 1, 1),
-  ]);
+  ];
 
   var faces = [
     [0, 1, 2, 3],
@@ -168,37 +177,58 @@ function makeCube() {
     [3, 2, 6, 7],
   ];
 
-  return new Polyhedron(vectors, faces);
+  return new Polyhedron(faces.map(function (face) {
+    return new VectorList(face.map(function (i) {return vectors[i]}));
+  }));
 }
 
-function Polyhedron(vectors, faces) {
+function makeTetrahedron() {
+  var deg = Trig.degreesToRadians;
+  var faces = [];
+
+  for (var i = 0; i < 3; i++) {
+    var face = makeRegularPolygon(3);
+    var angle = Math.asin(Math.sin(deg(30)) / (1 + Math.sin(deg(30))));
+    var face = makeRegularPolygon(3);
+    var o = face.vectors[0];
+    faces.push(
+      face.subtract(o)
+      .rotate(angle, deg(360 / 3) * i, 0)
+      .add(o)
+    );
+  }
+
+  var face = makeRegularPolygon(3);
+  var o = face.vectors[0];
+  faces.push(
+    face.subtract(o)
+    .rotate(deg(90), 0, 0)
+    .add(faces[1].vectors[1])
+  );
+
+  return new Polyhedron(faces);
+}
+
+function Polyhedron(faces) {
   Object.defineProperties(this, {
-    vectors: {get: function () {
-      return vectors;
-    }},
-    faces: {get: function () {
-      return faces.map(function (face) {
-        return new VectorList(face.map(function (i) {
-          return vectors.vectors[i];
-        }));
-      });
-    }},
-    _faces: {get: function () {
-      return faces;
-    }}
+    faces: {get: function () {return faces}}
   });
 }
 
 Polyhedron.prototype.multiply = function (factor) {
-  return new Polyhedron(this.vectors.multiply(factor), this._faces);
+  return new Polyhedron(this.faces.map(function (face) {return face.multiply(factor)}));
 }
 
 Polyhedron.prototype.add = function (vector) {
-  return new Polyhedron(this.vectors.add(vector), this._faces);
+  return new Polyhedron(this.faces.map(function (face) {return face.add(vector)}));
+}
+
+Polyhedron.prototype.subtract = function (vector) {
+  return new Polyhedron(this.faces.map(function (face) {return face.subtract(vector)}));
 }
 
 Polyhedron.prototype.rotate = function (x, y, z) {
-  return new Polyhedron(this.vectors.rotate(x, y, z), this._faces);
+  return new Polyhedron(this.faces.map(function (face) {return face.rotate(x, y, z)}));
 }
 
 function drawPolyhedron(canvas, faces, style) {
@@ -221,4 +251,4 @@ function drawPolyhedron(canvas, faces, style) {
   });
 }
 
-module.exports = CubeExample;
+module.exports = PolyhedronExample;

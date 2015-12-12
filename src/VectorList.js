@@ -63,6 +63,11 @@ VectorList.prototype.add = function (vector) {
   return new VectorList(vectors);
 }
 
+VectorList.prototype.subtract = function (vector) {
+  var vectors = this.vectors.map(function (v) {return v.subtract(vector)});
+  return new VectorList(vectors);
+}
+
 VectorList.prototype.rotate = function (x, y, z) {
   var vectors = this.vectors.map(function (v) {
     return v.rotate(x, y, z);
