@@ -11,8 +11,6 @@ var sineWave = require('../../modules/sineWave');
 
 var colors = new Array(6).fill(true, 0, 6).map(function () {return randomColor()});
 
-console.log(colors);
-
 var CubeExample = React.createClass({
   getInitialState: function () {
     return {
