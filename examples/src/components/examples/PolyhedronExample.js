@@ -62,7 +62,7 @@ var PolyhedronExample = React.createClass({
         <AxisControls
           label="Translate" action="translate"
           value={this.state.translate}
-          step={5}
+          step={1}
           onChange={this._handleTranslate}
         />
 
@@ -120,22 +120,23 @@ var PolyhedronExample = React.createClass({
     var radians = Trig.degreesToRadians;
     var rotate = this.state.rotate;
     var translate = this.state.translate;
+    var viewDistance = 10;
+    var view = new View(canvas, viewDistance);
 
     var tetrahedron = makeTetrahedron()
+      .multiply(1.5)
       .rotate(radians(rotate.x), radians(rotate.y), radians(rotate.z))
       .add(translate)
-      .multiply((canvas.height / 2) * 0.5)
-      .add(canvas.center)
-      .subtract(new Vector(canvas.width * 0.25, 0, 0));
+      .add(new Vector(-2, 0, 0))
+      .project(view);
 
     drawPolyhedron(canvas, tetrahedron.faces, style.cube);
 
     var cube = makeCube()
       .rotate(radians(rotate.x), radians(rotate.y), radians(rotate.z))
       .add(translate)
-      .multiply((canvas.height / 2) * 0.3)
-      .add(canvas.center)
-      .add(new Vector(canvas.width * 0.25, 0, 0));
+      .add(new Vector(2, 0, 0))
+      .project(view);
 
     drawPolyhedron(canvas, cube.faces, style.cube);
 
@@ -231,6 +232,29 @@ Polyhedron.prototype.rotate = function (x, y, z) {
   return new Polyhedron(this.faces.map(function (face) {return face.rotate(x, y, z)}));
 }
 
+Polyhedron.prototype.project = function (view) {
+  return new Polyhedron(this.faces.map(function (face) {
+    return new VectorList(face.vectors.map(function (vector) {
+      return view.project(vector);
+    }));
+  }));
+}
+
+function View(canvas, distance) {
+  this.canvas = canvas;
+  this.distance = distance;
+}
+
+View.prototype.project = function (vector) {
+  var width = this.canvas.width;
+  var height = this.canvas.height;
+  var distance = this.distance;
+  var factor = width / (distance + vector.z);
+  var x = vector.x * factor + width / 2;
+  var y = vector.y * factor + height / 2;
+  return new Vector(x, y, vector.z);
+}
+
 function drawPolyhedron(canvas, faces, style) {
   var avgZ = function (vectors) {
     var z = vectors.map(function (v) {return v.z});
@@ -244,7 +268,7 @@ function drawPolyhedron(canvas, faces, style) {
       vectors: face.vectors,
       index: i
     };
-  }).sort(function (a, b) {return a.avgZ - b.avgZ});
+  }).sort(function (a, b) {return b.avgZ - a.avgZ});
 
   faces.forEach(function (face, i) {
     drawPolygon(canvas, face.vectors, style[face.index]);

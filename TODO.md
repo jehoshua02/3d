@@ -1,8 +1,6 @@
 # TODO
 
-+ Cube Example
-  + Figure out how to project/scale/whatever when translating on z axis
-+ https://www.udacity.com/course/viewer#!/c-cs291/l-91376562/m-101541795
++ https://www.udacity.com/course/viewer#!/c-cs291/l-101410106/m-118429117
 + Research Perspective
   + https://en.wikipedia.org/wiki/Z-buffering
   + https://en.wikipedia.org/wiki/3D_rendering#Projection
@@ -11,6 +9,9 @@
   + https://www.youtube.com/watch?v=jeO_ytN_0kk
   + https://www.youtube.com/watch?v=dul0mui292Q
   + https://en.wikipedia.org/wiki/Viewing_frustum
++ PolyhedronExample
+  + Refactor out stuff that can be reused.
+  + Figure out how to dynamically generate regular polyhedron.
 + VectorList.rotate tests
 + RotateControl Component
 + Teapot Example
