@@ -1,22 +1,40 @@
 # TODO
 
-+ https://www.udacity.com/course/viewer#!/c-cs291/l-101410106/m-118429117
-+ Research Perspective
-  + https://en.wikipedia.org/wiki/Z-buffering
-  + https://en.wikipedia.org/wiki/3D_rendering#Projection
-  + https://en.wikipedia.org/wiki/3D_projection
-  + https://www.youtube.com/watch?v=3ZmqJb7J5wE&list=PLW3Zl3wyJwWOpdhYedlD-yCB7WQoHf-My&index=38
-  + https://www.youtube.com/watch?v=jeO_ytN_0kk
-  + https://www.youtube.com/watch?v=dul0mui292Q
-  + https://en.wikipedia.org/wiki/Viewing_frustum
-+ PolyhedronExample
-  + Refactor out stuff that can be reused.
-  + Figure out how to dynamically generate regular polyhedron.
-+ VectorList.rotate tests
-+ RotateControl Component
+## Examples
+
++ Camera/Scene Example
 + Teapot Example
-+ Camera Example - Look around scene with cube on it.
-  + https://en.wikipedia.org/wiki/Bounding_volume
++ Lighting Example
++ Pyramid Example
++ Cylinder Example
++ Canvas Component (receive shapes as prop, redraw on update)
++ Sphere Example
+
+## Research
+
++ https://www.udacity.com/course/viewer#!/c-cs291/l-101410106/m-118429117
++ Quaternions and Euler angles
+  + https://www.youtube.com/watch?v=Ne3RNhEVSIE&index=34&list=PLW3Zl3wyJwWOpdhYedlD-yCB7WQoHf-My
+  + http://answers.unity3d.com/questions/645903/please-explain-quaternions.html
+  + http://www.3dgep.com/understanding-quaternions/
+  + http://docs.unity3d.com/ScriptReference/Quaternion.Euler.html
+  + http://www.euclideanspace.com/maths/algebra/realNormedAlgebra/quaternions/index.htm
++ Textures / Skin
++ Transparency
++ Lighting
+  + Shadows
+  + Shading
+  + Reflections
+  + Gloss
+  + https://en.wikipedia.org/wiki/Ray_tracing_(graphics)
+  + https://en.wikipedia.org/wiki/Radiosity_(computer_graphics)
++ Motion/Physics
++ Mist, Fog, Distance Fade - This can be done by placing semi-transparent layers
+  a distance away on the normal vector of the camera.
+
+## Core
+
++ Simplify, Reorganize
 + Polygon Class
   + Polygon is a group of connected vectors.
   + All vectors lie on the same 2D plane.
@@ -46,7 +64,6 @@
     faces to other faces within Polyhedron should remain intact.
   + Polyhedrons expose their faces, which are simply Polygons, for drawing
     functions.
-+ Polyhedron Example
 + Regular Polyhedrons
 + Group Class(es)
   + PolyhedronGroup Class
@@ -63,38 +80,15 @@
     for the rest of the library since it doesn't have to treat these Groups
     differently. Nor do we have to maintain two classes that are 90% the same.
     We want to avoid inheritance for the sake of simplicity.
-+ Transparency
-+ Cube Example
-+ Canvas.draw(Shapes) to replace drawCircle, drawLine, drawGrid, etc.
-+ Pyramid Example
-+ Canvas Component (receive shapes as prop, redraw on update)
-+ lineDash / styling
-+ Textures / Skin
-+ Cylinder Example
-+ Sphere Example
-+ Lighting
-  + Shadows
-  + Shading
-  + Reflections
-  + Gloss
-  + https://en.wikipedia.org/wiki/Ray_tracing_(graphics)
-  + https://en.wikipedia.org/wiki/Radiosity_(computer_graphics)
-+ Mist, Fog, Distance Fade - This can be done by placing semi-transparent layers
-  a distance away on the normal vector of the camera.
-+ Motion/Physics
-+ Quaternions and Euler angles
-  + https://www.youtube.com/watch?v=Ne3RNhEVSIE&index=34&list=PLW3Zl3wyJwWOpdhYedlD-yCB7WQoHf-My
-  + http://answers.unity3d.com/questions/645903/please-explain-quaternions.html
-  + http://www.3dgep.com/understanding-quaternions/
-  + http://docs.unity3d.com/ScriptReference/Quaternion.Euler.html
-  + http://www.euclideanspace.com/maths/algebra/realNormedAlgebra/quaternions/index.htm
 + See if it makes sense to either expand or eliminate the Trig module
++ Canvas.draw(Shapes) to replace drawCircle, drawLine, drawGrid, etc.
+
+## Public
 
 + .editorconfig
 + Split React Components into separate lib(s)
 + Test React Components
 + Split examples into separate repo
-+ Make Examples pretty
 + Public Documentation
 + Linting
 + Publish to Github Pages
