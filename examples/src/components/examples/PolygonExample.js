@@ -31,11 +31,11 @@ var PolygonExample = React.createClass({
       <div>
         <Heading text="PolygonExample" />
 
-        <label>Auto:
+        <label>Auto
           <input type="checkbox" checked={this.state.auto} onChange={this._toggleAuto} />
         </label>
 
-        <label>Sides:
+        <label>Sides
           <input type="number" step="1" min="3" value={sides} onChange={this._changeSides} />
         </label>
 
@@ -57,6 +57,7 @@ var PolygonExample = React.createClass({
     return {
       canvas: {
         background: '#333',
+        borderRadius: 3
       },
       polygon: {
         fillStyle: 'hotpink'

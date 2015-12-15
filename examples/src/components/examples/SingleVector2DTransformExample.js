@@ -59,11 +59,11 @@ var SingleVector2DTransformExample = React.createClass({
             />
           }.bind(this))}
 
-          <label>Auto:
+          <label>Auto
             <input type="checkbox" checked={this.state.auto} onChange={this._toggleAutoRotate} />
           </label>
 
-          <label>Speed:
+          <label>Speed
             <input type="number" step="1" value={this.state.speed} onChange={this._changeSpeed} />
           </label>
         </fieldset>
@@ -75,6 +75,7 @@ var SingleVector2DTransformExample = React.createClass({
     return {
       canvas: {
         background: '#333',
+        borderRadius: 3
       },
       axis: {
         strokeStyle: '#444',

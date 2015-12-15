@@ -23,11 +23,10 @@ var Examples = React.createClass({
   _style: function () {
     return {
       root: {
-        padding: 20,
-        background: '#aaa'
+        padding: 20
       },
       page: {
-        maxWidth: 900,
+        maxWidth: 600,
         margin: '0 auto'
       }
     };

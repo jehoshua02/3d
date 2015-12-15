@@ -44,11 +44,11 @@ var PolyhedronExample = React.createClass({
       <div>
         <Heading text="PolyhedronExample" />
 
-        <label>Auto:
+        <label>Auto
           <input type="checkbox" checked={this.state.auto} onChange={this._toggleAuto} />
         </label>
 
-        <label>Speed:
+        <label>Speed
           <input type="number" step="1" value={this.state.speed} onChange={this._changeSpeed} />
         </label>
 
@@ -77,6 +77,7 @@ var PolyhedronExample = React.createClass({
     return {
       canvas: {
         background: '#333',
+        borderRadius: 3
       },
       cube: {
         0: {fillStyle: colors[0]},

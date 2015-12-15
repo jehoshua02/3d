@@ -19,7 +19,7 @@ var AxisControl = React.createClass({
     var value = this.props.value;
     var step = this.props.step;
     return (
-      <label>{axis.toUpperCase()}:
+      <label>{axis.toUpperCase()}
         <input type="number" step={step}
           value={value}
           onChange={this._handleChange}

@@ -34,6 +34,7 @@ var Heading = React.createClass({
       link: {
         textDecoration: 'none',
         color: hover ? 'hotpink' : 'inherit',
+        textShadow: hover ? '1px 1px 2px rgba(0, 0, 0, 0.3)' : null,
         transition: 'all .3s',
       },
       icon: {
