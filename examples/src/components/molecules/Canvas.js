@@ -1,7 +1,7 @@
 var ReactDOM = require('react-dom');
 var React = require('react');
 var _Canvas = require('src/Canvas');
-var ResizeSensor = require('./ResizeSensor');
+var ResizeSensor = require('react-resize-sensor');
 
 var Canvas = React.createClass({
   propTypes: {
