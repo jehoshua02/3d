@@ -1,5 +1,4 @@
 var React = require('react');
-var ReactDOM = require('react-dom');
 var Type = React.PropTypes;
 
 var AxisControl = React.createClass({
