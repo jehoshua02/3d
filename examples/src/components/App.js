@@ -2,6 +2,7 @@ var React = require('react');
 var SingleVector2DTransformExample = require('components/examples/SingleVector2DTransformExample');
 var PolygonExample = require('components/examples/PolygonExample');
 var PolyhedronExample = require('components/examples/PolyhedronExample');
+var SceneExample = require('components/examples/SceneExample');
 
 require('style.css');
 
@@ -15,6 +16,7 @@ var Examples = React.createClass({
           <SingleVector2DTransformExample />
           <PolygonExample />
           <PolyhedronExample />
+          <SceneExample />
         </div>
       </div>
     );
