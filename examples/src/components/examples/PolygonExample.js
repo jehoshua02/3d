@@ -8,6 +8,7 @@ var drawPolygon = require('../../modules/drawPolygon');
 var makeRegularPolygon = require('../../modules/makeRegularPolygon');
 var AxisControls = require('../molecules/AxisControls');
 var sineWave = require('../../modules/sineWave');
+var style = require('components/style');
 
 var PolygonExample = React.createClass({
   getInitialState: function () {
@@ -54,15 +55,11 @@ var PolygonExample = React.createClass({
   },
 
   _style: function () {
-    return {
-      canvas: {
-        background: '#333',
-        borderRadius: 3
-      },
+    return Object.assign({}, style, {
       polygon: {
-        fillStyle: 'hotpink'
+        fillStyle: style.color.primary
       }
-    };
+    });
   },
 
   _draw: function (canvas) {

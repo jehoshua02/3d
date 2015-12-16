@@ -6,19 +6,9 @@ var Vector = require('src/Vector');
 var VectorList = require('src/VectorList');
 var Trig = require('src/Trigonometry');
 var drawPolygon = require('../../modules/drawPolygon');
-var Color = require('color');
 var sineWave = require('../../modules/sineWave');
 var makeRegularPolygon = require('../../modules/makeRegularPolygon');
-
-var theme = Color('hotpink');
-var colors = [
-  theme,
-  theme.clone().darken(0.1),
-  theme.clone().darken(0.2),
-  theme.clone().darken(0.3),
-  theme.clone().darken(0.4),
-  theme.clone().darken(0.5),
-].map(function (color) {return color.rgbString()});
+var style = require('components/style');
 
 var PolyhedronExample = React.createClass({
   getInitialState: function () {
@@ -74,20 +64,7 @@ var PolyhedronExample = React.createClass({
   },
 
   _style: function () {
-    return {
-      canvas: {
-        background: '#333',
-        borderRadius: 3
-      },
-      cube: {
-        0: {fillStyle: colors[0]},
-        1: {fillStyle: colors[1]},
-        2: {fillStyle: colors[2]},
-        3: {fillStyle: colors[3]},
-        4: {fillStyle: colors[4]},
-        5: {fillStyle: colors[5]},
-      }
-    };
+    return Object.assign({}, style, {});
   },
 
   _handleRotate: function (action) {
