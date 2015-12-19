@@ -225,8 +225,10 @@ function View(canvas) {
 View.prototype.project = function (vector) {
   var width = this.canvas.width / 2;
   var height = this.canvas.height / 2;
-  var x = (vector.x / vector.z) * width + width;
-  var y = (vector.y / vector.z) * width + height;
+  var angle = Trig.degreesToRadians(90 / 2);
+  var distance = width / Math.tan(angle);
+  var x = (vector.x / vector.z) * distance + width;
+  var y = (vector.y / vector.z) * distance + height;
   return new Vector(x, y, vector.z);
 }
 
