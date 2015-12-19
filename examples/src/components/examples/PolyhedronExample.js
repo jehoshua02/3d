@@ -235,7 +235,7 @@ View.prototype.project = function (vector) {
 function drawPolyhedron(canvas, faces, style) {
   var avgZ = function (vectors) {
     var z = vectors.map(function (v) {return v.z});
-    var sum = z.reduce(function (sum, z) {return sum + z});
+    var sum = z.reduce(function (sum, z) {return sum + z}, 0);
     return sum / z.length;
   }
 

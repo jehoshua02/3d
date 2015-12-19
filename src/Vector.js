@@ -20,30 +20,22 @@ function Vector(x, y, z) {
 }
 
 /**
- * Returns object literal representation of a Vector.
- *
- * @return {Object} An object literal with x, y, z properties.
- */
-Vector.prototype.toObject = function () {
-  return {x: this.x, y: this.y, z: this.z};
-}
-
-/**
- * Returns JSON representation of a Vector.
- *
- * @return {String} Returns string like `'{x: x, y: y, z: z}'`.
- */
-Vector.prototype.toJSON = function () {
-  return JSON.stringify(this.toObject());
-}
-
-/**
  * Returns array representation of a Vector.
  *
  * @return {Array} Returns array like `[x, y, z]`.
  */
 Vector.prototype.toArray = function () {
   return [this.x, this.y, this.z];
+}
+
+/**
+ * Instantiates vector from array.
+ *
+ * @param  {Array} array
+ * @return {Vector}
+ */
+Vector.fromArray = function (array) {
+  return new Vector(array[0], array[1], array[2]);
 }
 
 /**

@@ -22,26 +22,6 @@ VectorList.prototype.toArray = function () {
 }
 
 /**
- * Returns array of Vectors in object literal form.
- *
- * @return {Array} An array of Vector object literals.
- */
-VectorList.prototype.toObject = function () {
-  return this.vectors.map(function (v) {return v.toObject()});
-}
-
-/**
- * Returns JSON representation of VectorList.
- *
- * @return {String}
- */
-VectorList.prototype.toJSON = function () {
-  return JSON.stringify(
-    this.vectors.map(function (v) {return v.toObject()})
-  );
-}
-
-/**
  * Multiplies each Vector by factor and returns new VectorList.
  *
  * @param  {Number} factor Factor by which to multiply each Vector.

@@ -17,22 +17,6 @@ describe('VectorList', function () {
     });
   });
 
-  describe('toObject', function () {
-    it('should return array of object literals', function () {
-      var list = new VectorList([new Vector(0, 1, 0), new Vector(1, 0, 0)]);
-      var actual = list.toObject();
-      expect(actual).to.eql([{x: 0, y: 1, z: 0}, {x: 1, y: 0, z: 0}]);
-    })
-  });
-
-  describe('toJSON', function () {
-    it('should return JSON string of vectors', function () {
-      var list = new VectorList([new Vector(0, 1, 0), new Vector(1, 0, 0)]);
-      var actual = list.toJSON();
-      expect(actual).to.equal('[{"x":0,"y":1,"z":0},{"x":1,"y":0,"z":0}]');
-    });
-  });
-
   describe('multiply', function () {
     it('should multiply every vector in the list and return new VectorList', function () {
       var list = new VectorList([new Vector(0, 1, 0), new Vector(1, 0, 0)]);
