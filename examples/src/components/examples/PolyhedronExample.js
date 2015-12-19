@@ -105,7 +105,7 @@ var PolyhedronExample = React.createClass({
       .multiply(1.5)
       .rotate(radians(rotate.x), radians(rotate.y), radians(rotate.z))
       .add(translate)
-      .add(new Vector(-2, 0, 0))
+      .add(new Vector(-2, 0, 5))
       .project(view);
 
     drawPolyhedron(canvas, tetrahedron.faces, style.cube);
@@ -113,7 +113,7 @@ var PolyhedronExample = React.createClass({
     var cube = makeCube()
       .rotate(radians(rotate.x), radians(rotate.y), radians(rotate.z))
       .add(translate)
-      .add(new Vector(2, 0, 0))
+      .add(new Vector(2, 0, 5))
       .project(view);
 
     drawPolyhedron(canvas, cube.faces, style.cube);
@@ -218,18 +218,15 @@ Polyhedron.prototype.project = function (view) {
   }));
 }
 
-function View(canvas, distance) {
+function View(canvas) {
   this.canvas = canvas;
-  this.distance = distance;
 }
 
 View.prototype.project = function (vector) {
-  var width = this.canvas.width;
-  var height = this.canvas.height;
-  var distance = this.distance;
-  var factor = width / (distance + vector.z);
-  var x = vector.x * factor + width / 2;
-  var y = vector.y * factor + height / 2;
+  var width = this.canvas.width / 2;
+  var height = this.canvas.height / 2;
+  var x = (vector.x / vector.z) * width + width;
+  var y = (vector.y / vector.z) * width + height;
   return new Vector(x, y, vector.z);
 }
 
