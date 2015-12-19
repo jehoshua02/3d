@@ -227,8 +227,8 @@ View.prototype.project = function (vector) {
   var height = this.canvas.height / 2;
   var angle = Trig.degreesToRadians(90 / 2);
   var distance = width / Math.tan(angle);
-  var x = (vector.x / vector.z) * distance + width;
-  var y = (vector.y / vector.z) * distance + height;
+  var x = (vector.x / ((width / distance) * vector.z)) * width + width;
+  var y = (vector.y / ((height / distance) * vector.z)) * height + height;
   return new Vector(x, y, vector.z);
 }
 
