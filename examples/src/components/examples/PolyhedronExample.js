@@ -1,14 +1,14 @@
 var React = require('react');
-var Heading = require('../molecules/Heading');
-var AxisControls = require('../molecules/AxisControls');
-var Canvas = require('../molecules/Canvas');
+var Heading = require('components/molecules/Heading');
+var AxisControls = require('components/molecules/AxisControls');
+var Canvas = require('components/molecules/Canvas');
 var Vector = require('src/Vector');
-var VectorList = require('src/VectorList');
 var Trig = require('src/Trigonometry');
-var drawPolygon = require('../../modules/drawPolygon');
-var sineWave = require('../../modules/sineWave');
-var makeRegularPolygon = require('../../modules/makeRegularPolygon');
+var sineWave = require('modules/sineWave');
 var style = require('components/style');
+var makeCube = require('modules/makeCube');
+var makeTetrahedron = require('modules/makeTetrahedron');
+var drawPolyhedron = require('modules/drawPolyhedron');
 
 var PolyhedronExample = React.createClass({
   getInitialState: function () {
@@ -133,108 +133,5 @@ var PolyhedronExample = React.createClass({
     });
   }
 });
-
-function makeCube() {
-  var vectors = [
-    new Vector(-1, -1, -1),
-    new Vector(1, -1, -1),
-    new Vector(1, 1, -1),
-    new Vector(-1, 1, -1),
-    new Vector(-1, -1, 1),
-    new Vector(1, -1, 1),
-    new Vector(1, 1, 1),
-    new Vector(-1, 1, 1),
-  ];
-
-  var faces = [
-    [0, 1, 2, 3],
-    [1, 5, 6, 2],
-    [5, 4, 7, 6],
-    [4, 0, 3, 7],
-    [0, 1, 5, 4],
-    [3, 2, 6, 7],
-  ];
-
-  return new Polyhedron(faces.map(function (face) {
-    return new VectorList(face.map(function (i) {return vectors[i]}));
-  }));
-}
-
-function makeTetrahedron() {
-  var deg = Trig.degreesToRadians;
-  var faces = [];
-
-  for (var i = 0; i < 3; i++) {
-    var face = makeRegularPolygon(3);
-    var angle = Math.asin(Math.sin(deg(30)) / (1 + Math.sin(deg(30))));
-    var face = makeRegularPolygon(3);
-    var o = face.vectors[0];
-    faces.push(
-      face.subtract(o)
-      .rotate(angle, deg(360 / 3) * i, 0)
-      .add(o)
-    );
-  }
-
-  var face = makeRegularPolygon(3);
-  var o = face.vectors[0];
-  faces.push(
-    face.subtract(o)
-    .rotate(deg(90), 0, 0)
-    .add(faces[1].vectors[1])
-  );
-
-  return new Polyhedron(faces);
-}
-
-function Polyhedron(faces) {
-  Object.defineProperties(this, {
-    faces: {get: function () {return faces}}
-  });
-}
-
-Polyhedron.prototype.multiply = function (factor) {
-  return new Polyhedron(this.faces.map(function (face) {return face.multiply(factor)}));
-}
-
-Polyhedron.prototype.add = function (vector) {
-  return new Polyhedron(this.faces.map(function (face) {return face.add(vector)}));
-}
-
-Polyhedron.prototype.subtract = function (vector) {
-  return new Polyhedron(this.faces.map(function (face) {return face.subtract(vector)}));
-}
-
-Polyhedron.prototype.rotate = function (x, y, z) {
-  return new Polyhedron(this.faces.map(function (face) {return face.rotate(x, y, z)}));
-}
-
-Polyhedron.prototype.project = function (width, height) {
-  return new Polyhedron(this.faces.map(function (face) {
-    return new VectorList(face.vectors.map(function (vector) {
-      return vector.project(width, height);
-    }));
-  }));
-}
-
-function drawPolyhedron(canvas, faces, style) {
-  var avgZ = function (vectors) {
-    var z = vectors.map(function (v) {return v.z});
-    var sum = z.reduce(function (sum, z) {return sum + z}, 0);
-    return sum / z.length;
-  }
-
-  faces = faces.map(function (face, i) {
-    return {
-      avgZ: avgZ(face.vectors),
-      vectors: face.vectors,
-      index: i
-    };
-  }).sort(function (a, b) {return b.avgZ - a.avgZ});
-
-  faces.forEach(function (face, i) {
-    drawPolygon(canvas, face.vectors, style[face.index]);
-  });
-}
 
 module.exports = PolyhedronExample;
