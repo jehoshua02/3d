@@ -158,4 +158,50 @@ describe('Vector', function () {
     });
   });
 
+  describe('project', function () {
+    [
+      // z-axis, no translate = center
+      {input: {v: [0, 0, 0]}, expected: [50, 25, 0]},
+      {input: {v: [0, 0, 1]}, expected: [50, 25, 1]},
+      {input: {v: [0, 0, 2]}, expected: [50, 25, 2]},
+
+      // translate x
+      {input: {v: [1, 0, 1]}, expected: [100, 25, 1]},
+      {input: {v: [-1, 0, 1]}, expected: [0, 25, 1]},
+
+      // translate y
+      {input: {v: [0, 1, 1]}, expected: [50, 75, 1]},
+      {input: {v: [0, -1, 1]}, expected: [50, -25, 1]},
+
+      // translate x and y
+      {input: {v: [1, 1, 1]}, expected: [100, 75, 1]},
+      {input: {v: [-1, -1, 1]}, expected: [0, -25, 1]},
+
+      // no depth, translate?
+      // TODO wonkiness up close.
+      {input: {v: [1, 1, 0]}, expected: [50, 25, 0]},
+    ].forEach(function (data) {
+      it([
+        'should project [' + data.input.v + ']',
+        'to [' + data.expected + ']'
+      ].join(' '), function () {
+        // Arrange
+        var v = Vector.fromArray(data.input.v);
+        var width = 100;
+        var height = 50;
+        var expected = data.expected;
+
+        // Act
+        var actual = v.project(width, height);
+
+        // Assert
+        expect(actual.toArray().map(function (n) {
+          n = parseFloat(n.toFixed(2));
+          n = n === -0 ? 0 : n;
+          return n;
+        })).to.eql(expected);
+      });
+    });
+  })
+
 });

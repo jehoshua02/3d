@@ -99,14 +99,13 @@ var PolyhedronExample = React.createClass({
     var rotate = this.state.rotate;
     var translate = this.state.translate;
     var viewDistance = 10;
-    var view = new View(canvas, viewDistance);
 
     var tetrahedron = makeTetrahedron()
       .multiply(1.5)
       .rotate(radians(rotate.x), radians(rotate.y), radians(rotate.z))
       .add(translate)
       .add(new Vector(-2, 0, 5))
-      .project(view);
+      .project(canvas.width, canvas.height);
 
     drawPolyhedron(canvas, tetrahedron.faces, style.cube);
 
@@ -114,7 +113,7 @@ var PolyhedronExample = React.createClass({
       .rotate(radians(rotate.x), radians(rotate.y), radians(rotate.z))
       .add(translate)
       .add(new Vector(2, 0, 5))
-      .project(view);
+      .project(canvas.width, canvas.height);
 
     drawPolyhedron(canvas, cube.faces, style.cube);
 
@@ -210,26 +209,12 @@ Polyhedron.prototype.rotate = function (x, y, z) {
   return new Polyhedron(this.faces.map(function (face) {return face.rotate(x, y, z)}));
 }
 
-Polyhedron.prototype.project = function (view) {
+Polyhedron.prototype.project = function (width, height) {
   return new Polyhedron(this.faces.map(function (face) {
     return new VectorList(face.vectors.map(function (vector) {
-      return view.project(vector);
+      return vector.project(width, height);
     }));
   }));
-}
-
-function View(canvas) {
-  this.canvas = canvas;
-}
-
-View.prototype.project = function (vector) {
-  var width = this.canvas.width / 2;
-  var height = this.canvas.height / 2;
-  var angle = Trig.degreesToRadians(90 / 2);
-  var distance = width / Math.tan(angle);
-  var x = (vector.x / ((width / distance) * vector.z)) * width + width;
-  var y = (vector.y / ((height / distance) * vector.z)) * height + height;
-  return new Vector(x, y, vector.z);
 }
 
 function drawPolyhedron(canvas, faces, style) {

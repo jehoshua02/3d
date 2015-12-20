@@ -194,4 +194,32 @@ Vector.prototype.rotate = function (x, y, z) {
   return this.rotateX(x).rotateY(y).rotateZ(z);
 }
 
+/**
+ * Project vector onto 2D plane.
+ *
+ * Conceptually, the 2D plane, of specified width and height, sits at the front
+ * of a frustum, with a 90 degree angle between right and left faces.
+ *
+ * Useful for creating the effect of perspective.
+ *
+ * @param  {Number} width
+ * @param  {Number} height
+ * @return {Vector}
+ */
+Vector.prototype.project = function (width, height) {
+  var w = width / 2;
+  var h = height / 2;
+  var a = Trig.degreesToRadians(90 / 2);
+  var d = w / Math.tan(a);
+  var rw = w / d;
+  var rh = h / d;
+  var wz = rw * this.z;
+  var hz = rh * this.z;
+  var px = wz === 0 ? 0 : this.x / wz;
+  var py = hz === 0 ? 0 : this.y / hz;
+  var x = px * w + w;
+  var y = py * h + h;
+  return new Vector(x, y, this.z);
+}
+
 module.exports = Vector;
