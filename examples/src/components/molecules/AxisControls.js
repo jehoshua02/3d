@@ -36,12 +36,18 @@ var AxisControls = React.createClass({
             axis={axis}
             step={step}
             value={value[axis]}
-            onChange={handleChange}
+            onChange={this._handleChange}
             key={key}
           />
         }.bind(this))}
       </fieldset>
     );
+  },
+
+  _handleChange: function (action) {
+    action.values = Object.assign({}, this.props.value);
+    action.values[action.axis] = action.value;
+    this.props.onChange(action);
   }
 });
 

@@ -209,16 +209,10 @@ Vector.prototype.rotate = function (x, y, z) {
 Vector.prototype.project = function (width, height) {
   var w = width / 2;
   var h = height / 2;
-  var a = Trig.degreesToRadians(90 / 2);
-  var d = w / Math.tan(a);
-  var rw = w / d;
-  var rh = h / d;
-  var wz = rw * this.z;
-  var hz = rh * this.z;
-  var px = wz === 0 ? 0 : this.x / wz;
-  var py = hz === 0 ? 0 : this.y / hz;
-  var x = px * w + w;
-  var y = py * h + h;
+  var d = w;
+  var z = this.z > 0 ? this.z : 0;
+  var x = (this.x / z) * d + w;
+  var y = (this.y / z) * d + h;
   return new Vector(x, y, this.z);
 }
 
