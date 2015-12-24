@@ -27,13 +27,13 @@ describe('Vector', function () {
     });
   });
 
-  describe('add', function () {
-    it('should return new vector, values added', function () {
+  describe('translate', function () {
+    it('should return new vector, values translated', function () {
       // Arrange
       var v = new Vector(1, 2, 3);
 
       // Act
-      var actual = v.add(new Vector(1, 2, 3));
+      var actual = v.translate(1, 2, 3);
 
       // Assert
       expect(v.toArray()).to.eql([1, 2, 3]);
@@ -41,33 +41,17 @@ describe('Vector', function () {
     });
   });
 
-  describe('subtract', function () {
-    it('should return new vector, values subtracted', function () {
-      // Arrange
-      var v = new Vector(2, 4, 6);
-
-      // Act
-      var actual = v.subtract(new Vector(1, 2, 3));
-
-      // Assert
-      expect(v.toArray()).to.eql([2, 4, 6]);
-      expect(actual.toArray()).to.eql([1, 2, 3]);
-    });
-  });
-
-  describe('multiply', function () {
+  describe('scale', function () {
     it('should return new vector, values multiplied', function () {
       var v = new Vector(1, 2, 3);
-      var actual = v.multiply(2);
+      var actual = v.scale(2, 2, 2);
       expect(v.toArray()).to.eql([1, 2, 3]);
       expect(actual.toArray()).to.eql([2, 4, 6]);
     });
-  });
 
-  describe('divide', function () {
     it('should return new vector, values divided', function () {
       var v = new Vector(2, 4, 6);
-      var actual = v.divide(2);
+      var actual = v.scale(0.5, 0.5, 0.5);
       expect(v.toArray()).to.eql([2, 4, 6]);
       expect(actual.toArray()).to.eql([1, 2, 3]);
     });
@@ -158,7 +142,7 @@ describe('Vector', function () {
     });
   });
 
-  describe('project', function () {
+  describe.skip('project', function () {
     [
       // z-axis, no translate = center
       {input: {v: [0, 0, 0]}, expected: [50, 25, 0]},

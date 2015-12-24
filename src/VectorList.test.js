@@ -17,19 +17,19 @@ describe('VectorList', function () {
     });
   });
 
-  describe('multiply', function () {
+  describe('scale', function () {
     it('should multiply every vector in the list and return new VectorList', function () {
       var list = new VectorList([new Vector(0, 1, 0), new Vector(1, 0, 0)]);
-      var actual = list.multiply(5);
+      var actual = list.scale(5, 5, 5);
       expect(list.toArray()).to.eql([[0, 1, 0], [1, 0, 0]]);
       expect(actual.toArray()).to.eql([[0, 5, 0], [5, 0, 0]]);
     });
   });
 
-  describe('add', function () {
+  describe('translate', function () {
     it('should add vector to every vector and return new VectorList', function () {
       var list = new VectorList([new Vector(0, 1, 0), new Vector(1, 0, 0)]);
-      var actual = list.add(new Vector(1, 1, 1));
+      var actual = list.translate(1, 1, 1);
       expect(list.toArray()).to.eql([[0, 1, 0], [1, 0, 0]]);
       expect(actual.toArray()).to.eql([[1, 2, 1], [2, 1, 1]]);
     });

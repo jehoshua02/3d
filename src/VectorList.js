@@ -27,8 +27,8 @@ VectorList.prototype.toArray = function () {
  * @param  {Number} factor Factor by which to multiply each Vector.
  * @return {VectorList}
  */
-VectorList.prototype.multiply = function (factor) {
-  var vectors = this.vectors.map(function (v) {return v.multiply(factor)});
+VectorList.prototype.scale = function (x, y, z) {
+  var vectors = this.vectors.map(function (v) {return v.scale(x, y, z)});
   return new VectorList(vectors);
 }
 
@@ -38,13 +38,8 @@ VectorList.prototype.multiply = function (factor) {
  * @param {Vector} vector Vector to add into each Vector.
  * @return {VectorList}
  */
-VectorList.prototype.add = function (vector) {
-  var vectors = this.vectors.map(function (v) {return v.add(vector)});
-  return new VectorList(vectors);
-}
-
-VectorList.prototype.subtract = function (vector) {
-  var vectors = this.vectors.map(function (v) {return v.subtract(vector)});
+VectorList.prototype.translate = function (x, y, z) {
+  var vectors = this.vectors.map(function (v) {return v.translate(x, y, z)});
   return new VectorList(vectors);
 }
 

@@ -39,62 +39,32 @@ Vector.fromArray = function (array) {
 }
 
 /**
- * Returns the sum of two Vectors.
+ * Translate vector.
  *
- * Useful for positioning Vector relative to another Vector after transformation.
- *
- * @param {Vector} that Vector to add into this Vector. Corresponding coordinates are added together.
+ * @param  {Number} x
+ * @param  {Number} y
+ * @param  {Number} z
  * @return {Vector}
  */
-Vector.prototype.add = function (that) {
+Vector.prototype.translate = function (x, y, z) {
   return new Vector(
-    this.x + that.x,
-    this.y + that.y,
-    this.z + that.z
+    this.x + x,
+    this.y + y,
+    this.z + z
   );
 }
 
 /**
- * Returns the difference of two Vectors.
- *
- * Useful for positioning Vector relative to origin 0,0,0 before transformation.
- *
- * @param  {Vector} that Vector to subtract from this Vector. Corresponding coordinates are subtracted.
- * @return {Vector}
- */
-Vector.prototype.subtract = function (that) {
-  return new Vector(
-    this.x - that.x,
-    this.y - that.y,
-    this.z - that.z
-  );
-}
-
-/**
- * Multiplies a Vector.
+ * Scale a Vector.
  *
  * @param  {Number} factor Factor by which each coordinate will be multiplied.
  * @return {Vector}
  */
-Vector.prototype.multiply = function (factor) {
+Vector.prototype.scale = function (x, y, z) {
   return new Vector(
-    this.x * factor,
-    this.y * factor,
-    this.z * factor
-  );
-}
-
-/**
- * Divides a Vector.
- *
- * @param  {Number} divisor Number by which all coordinates will be divided.
- * @return {Vector}
- */
-Vector.prototype.divide = function (divisor) {
-  return new Vector(
-    this.x / divisor,
-    this.y / divisor,
-    this.z / divisor
+    this.x * x,
+    this.y * y,
+    this.z * z
   );
 }
 
@@ -105,7 +75,7 @@ Vector.prototype.divide = function (divisor) {
  * @return {Number}
  */
 Vector.prototype.distance = function (that) {
-  that = that.subtract(this);
+  that = that.translate(this.x, this.y, this.z);
   var hypotenuse = Trig.findHypotenuseGivenAdjacentAndOpposite;
   return hypotenuse(hypotenuse(that.x, that.z), that.y);
 }
@@ -210,7 +180,7 @@ Vector.prototype.project = function (width, height) {
   var w = width / 2;
   var h = height / 2;
   var d = w;
-  var z = this.z > 0 ? this.z : 0;
+  var z = this.z;
   var x = (this.x / z) * d + w;
   var y = (this.y / z) * d + h;
   return new Vector(x, y, this.z);
